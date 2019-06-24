@@ -17,7 +17,6 @@
       <Path>Library/PackageCache/com.unity.test-framework.performance@1.0.9-preview</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@2.0.1</Path>
       <Path>Library/PackageCache/nuget.mono-cecil@0.1.6-preview</Path>
-      <Path>Packages</Path>
       <Path>ProjectSettings</Path>
     </explicitIncludes>
     <explicitExcludes>

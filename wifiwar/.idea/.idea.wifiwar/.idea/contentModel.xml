@@ -15,13 +15,79 @@
             <e p="RotationSystem.cs" t="Include" />
           </e>
         </e>
+        <e p="Networking" t="Include">
+          <e p="ClientBehavior.cs" t="Include" />
+          <e p="ServerBehavior.cs" t="Include" />
+        </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
-      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive">
+        <e p="com.unity.transport" t="Include">
+          <e p="Editor" t="Include">
+            <e p="PipelineCollectionGeneratorWindow.cs" t="Include" />
+            <e p="Unity.Networking.Transport.Editor.asmdef" t="Include" />
+          </e>
+          <e p="Runtime" t="Include">
+            <e p="Bindings" t="Include">
+              <e p="network.bindings.cs" t="Include" />
+            </e>
+            <e p="DataStream.cs" t="Include" />
+            <e p="INetworkDriver.cs" t="Include" />
+            <e p="IPCManager.cs" t="Include" />
+            <e p="NetworkCompressionModel.cs" t="Include" />
+            <e p="NetworkConnection.cs" t="Include" />
+            <e p="NetworkDriver.cs" t="Include" />
+            <e p="NetworkEndPoint.cs" t="Include" />
+            <e p="NetworkEventQueue.cs" t="Include" />
+            <e p="NetworkInterface.cs" t="Include" />
+            <e p="NetworkLogger.cs" t="Include" />
+            <e p="NetworkParams.cs" t="Include" />
+            <e p="NetworkPipeline.cs" t="Include" />
+            <e p="NetworkProtocols.cs" t="Include" />
+            <e p="Pipelines" t="Include">
+              <e p="DefaultPipelineStageCollection.cs" t="Include" />
+              <e p="ReliableSequencedPipelineStage.cs" t="Include" />
+              <e p="ReliableUtility.cs" t="Include" />
+              <e p="SimulatorPipelineStage.cs" t="Include" />
+              <e p="SimulatorUtility.cs" t="Include" />
+              <e p="UnreliableSequencedPipelineStage.cs" t="Include" />
+            </e>
+            <e p="Unity.Networking.Transport.asmdef" t="Include" />
+            <e p="Utilities.cs" t="Include" />
+          </e>
+          <e p="Tests" t="Include">
+            <e p="Editor" t="Include">
+              <e p="DataStreamTests.cs" t="Include" />
+              <e p="NetworkConnectionUnitTests.cs" t="Include" />
+              <e p="NetworkDriverFlowTest.cs" t="Include" />
+              <e p="NetworkDriverLoadTest.cs" t="Include" />
+              <e p="NetworkDriverUnitTests.cs" t="Include" />
+              <e p="NetworkEndPointUnitTests.cs" t="Include" />
+              <e p="NetworkEventQueueTests.cs" t="Include" />
+              <e p="NetworkHostUnitTests.cs" t="Include" />
+              <e p="NetworkJobTests.cs" t="Include" />
+              <e p="NetworkParamsTests.cs" t="Include" />
+              <e p="NetworkPipelineTest.cs" t="Include" />
+              <e p="NetworkProtocolsTests.cs" t="Include" />
+              <e p="ReliablePipelineTests.cs" t="Include" />
+              <e p="Unity.Networking.Transport.EditorTests.asmdef" t="Include" />
+              <e p="UtilitiesTests.cs" t="Include" />
+            </e>
+            <e p="Runtime" t="Include">
+              <e p="com.unity.transport.Tests.asmdef" t="Include" />
+              <e p="ServerAndClientTests.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="Unity.Networking.Transport.csproj" t="IncludeRecursive" />
+      <e p="Unity.Networking.Transport.Editor.csproj" t="IncludeRecursive" />
+      <e p="Unity.Networking.Transport.EditorTests.csproj" t="IncludeRecursive" />
+      <e p="Unity.Networking.Transport.PlayTests.csproj" t="IncludeRecursive" />
       <e p="wifiwar.sln" t="IncludeFlat" />
     </e>
     <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_wifiwar.2086318395.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_wifiwar.-2058062867.00" t="ExcludeRecursive" />
   </component>
 </project>

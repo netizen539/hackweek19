@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62a1c20b-663c-40df-83aa-f92258411e9a" name="Default Changelist" comment="" />
+    <list default="true" id="62a1c20b-663c-40df-83aa-f92258411e9a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/ECS/Components/RotationSpeedComponent.cs">
           <provider selected="true" editor-type-id="text-editor">
@@ -26,7 +30,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/ECS/Systems/RotationSystem.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
+            <state relative-caret-position="165">
               <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
               <folding>
                 <marker date="1561400733915" expanded="false" signature="6:149" ph="..." />
@@ -39,11 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/ECS/Converters/RotationSpeedConvert.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+            <state relative-caret-position="120">
+              <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
               <folding>
                 <marker date="1561401082168" expanded="false" signature="6:125" ph="..." />
                 <marker date="1561401082168" expanded="true" signature="204:523" ph="{...}" />
@@ -53,12 +57,128 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Networking/ServerBehavior.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="56" column="31" lean-forward="true" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+              <folding>
+                <marker date="1561408815672" expanded="true" signature="6:384" ph="..." />
+                <marker date="1561408815672" expanded="true" signature="427:1034" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="547:1032" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="636:797" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="689:787" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="926:1026" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="1081:2191" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="1222:2189" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="1496:2183" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="1531:2173" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="2236:3719" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="2473:2829" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="2862:3038" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="3097:3717" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="3216:3299" ph="{...}" />
+                <marker date="1561408815672" expanded="true" signature="3368:3486" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Networking/ClientBehavior.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
+              <folding>
+                <marker date="1561408745827" expanded="true" signature="6:337" ph="..." />
+                <marker date="1561408745827" expanded="true" signature="368:1489" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="523:1487" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="567:703" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="883:1481" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="918:1471" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="1534:2795" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="1798:2293" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="2326:2460" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="2480:2793" ph="{...}" />
+                <marker date="1561408745827" expanded="true" signature="2569:2676" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/NetworkEndPoint.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="87">
+              <caret line="129" column="9" lean-forward="true" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
+              <folding>
+                <marker date="1559714266000" expanded="false" signature="6:92" ph="..." />
+                <marker date="1559714266000" expanded="true" signature="130:5330" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="137:350" ph="/// NetworkFamily indicates what type of underlying medium we are using. ... " />
+                <marker date="1559714266000" expanded="true" signature="380:485" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="491:622" ph="/// The NetworkEndPoint is our representation of the &lt;see cref=&quot;System.Net.IPEndPoint&quot;/&gt; type. ... " />
+                <marker date="1559714266000" expanded="true" signature="703:5328" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1095:1284" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1151:1274" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1336:1419" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1466:1588" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1615:1783" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1820:2092" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="2210:3016" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="2252:2354" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="2869:2913" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="3236:4184" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="3349:4128" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="3435:3568" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="3678:3812" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="3847:3980" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4266:4323" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4405:4463" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4514:4586" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4629:4988" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4700:4978" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="4808:4924" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="5033:5322" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="5154:5285" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/Bindings/network.bindings.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+              <folding>
+                <marker date="1559714266000" expanded="true" signature="75:4405" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="158:220" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="226:359" ph="/* TODO: Fix this internally incase there are other platforms that also does ... */" />
+                <marker date="1559714266000" expanded="true" signature="520:675" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="858:898" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="975:1154" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1234:1511" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1548:1599" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="1680:2010" ph="{...}" />
+                <marker date="1559714266000" expanded="true" signature="2057:4403" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/Bindings/network.bindings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/NetworkEndPoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ECS/Systems/RotationSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Networking/ServerBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Networking/ClientBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ECS/Converters/RotationSpeedConvert.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ECS/Components/RotationSpeedComponent.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ECS/Systems/RotationSystem.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -66,6 +186,16 @@
         <option value="$PROJECT_DIR$/Assets/ECS/Components/RotationSpeedComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/ECS/Systems/RotationSystem.cs" />
         <option value="$PROJECT_DIR$/Assets/ECS/Converters/RotationSpeedConvert.cs" />
+        <option value="$PROJECT_DIR$/Packages/com.unity.transport/Runtime/NetworkEndPoint.cs" />
+        <option value="$PROJECT_DIR$/Assets/Networking/ClientBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Networking/ServerBehavior.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/.idea.wifiwar/.idea/vcs.xml" />
       </list>
     </option>
   </component>
@@ -75,20 +205,21 @@
     <option name="width" value="1681" />
     <option name="height" value="1027" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="UnityExplorer" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
-      </pane>
       <pane id="FileSystemExplorer" />
-      <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="AssemblyExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -138,11 +269,12 @@
       <option name="presentableId" value="Default" />
       <updated>1561400277242</updated>
       <workItem from="1561400279782" duration="873000" />
+      <workItem from="1561404117620" duration="3606000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="873000" />
+    <option name="totallyTimeSpent" value="4479000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -157,18 +289,9 @@
     <frame x="45" y="23" width="1681" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2495424" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25259304" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="NuGet" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Unity" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Unit Tests" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Performance Profiler" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -176,12 +299,21 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Errors In Solution" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Unit Tests Coverage" />
+      <window_info anchor="bottom" id="NuGet" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Performance Profiler" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Unity" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Unit Tests" order="13" />
+      <window_info anchor="bottom" id="Terminal" order="14" />
+      <window_info anchor="bottom" id="Event Log" order="15" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Errors In Solution" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="5" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,7 +345,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/ECS/Systems/RotationSystem.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
+        <state relative-caret-position="165">
           <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
           <folding>
             <marker date="1561400733915" expanded="false" signature="6:149" ph="..." />
@@ -227,12 +359,113 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/ECS/Converters/RotationSpeedConvert.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        <state relative-caret-position="120">
+          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
           <folding>
             <marker date="1561401082168" expanded="false" signature="6:125" ph="..." />
             <marker date="1561401082168" expanded="true" signature="204:523" ph="{...}" />
             <marker date="1561401082168" expanded="true" signature="361:521" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/Bindings/network.bindings.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+          <folding>
+            <marker date="1559714266000" expanded="true" signature="75:4405" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="158:220" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="226:359" ph="/* TODO: Fix this internally incase there are other platforms that also does ... */" />
+            <marker date="1559714266000" expanded="true" signature="520:675" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="858:898" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="975:1154" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1234:1511" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1548:1599" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1680:2010" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="2057:4403" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Packages/com.unity.transport/Runtime/NetworkEndPoint.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="129" column="9" lean-forward="true" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
+          <folding>
+            <marker date="1559714266000" expanded="false" signature="6:92" ph="..." />
+            <marker date="1559714266000" expanded="true" signature="130:5330" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="137:350" ph="/// NetworkFamily indicates what type of underlying medium we are using. ... " />
+            <marker date="1559714266000" expanded="true" signature="380:485" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="491:622" ph="/// The NetworkEndPoint is our representation of the &lt;see cref=&quot;System.Net.IPEndPoint&quot;/&gt; type. ... " />
+            <marker date="1559714266000" expanded="true" signature="703:5328" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1095:1284" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1151:1274" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1336:1419" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1466:1588" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1615:1783" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="1820:2092" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="2210:3016" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="2252:2354" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="2869:2913" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="3236:4184" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="3349:4128" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="3435:3568" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="3678:3812" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="3847:3980" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4266:4323" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4405:4463" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4514:4586" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4629:4988" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4700:4978" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="4808:4924" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="5033:5322" ph="{...}" />
+            <marker date="1559714266000" expanded="true" signature="5154:5285" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Networking/ClientBehavior.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
+          <folding>
+            <marker date="1561408745827" expanded="true" signature="6:337" ph="..." />
+            <marker date="1561408745827" expanded="true" signature="368:1489" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="523:1487" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="567:703" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="883:1481" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="918:1471" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="1534:2795" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="1798:2293" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="2326:2460" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="2480:2793" ph="{...}" />
+            <marker date="1561408745827" expanded="true" signature="2569:2676" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Networking/ServerBehavior.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="56" column="31" lean-forward="true" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+          <folding>
+            <marker date="1561408815672" expanded="true" signature="6:384" ph="..." />
+            <marker date="1561408815672" expanded="true" signature="427:1034" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="547:1032" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="636:797" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="689:787" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="926:1026" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="1081:2191" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="1222:2189" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="1496:2183" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="1531:2173" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="2236:3719" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="2473:2829" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="2862:3038" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="3097:3717" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="3216:3299" ph="{...}" />
+            <marker date="1561408815672" expanded="true" signature="3368:3486" ph="{...}" />
           </folding>
         </state>
       </provider>
