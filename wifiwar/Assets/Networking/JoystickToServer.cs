@@ -35,13 +35,15 @@ public class JoystickToServer : MonoBehaviour
         //Debug.Log("cur:"+currentTimeMs+" vs "+(lastUpdateMs+updateRateMs)+" both:"+lastUpdateMs+" + "+updateRateMs);
         if (currentTimeMs > (lastUpdateMs + updateRateMs))
         {
-            Debug.Log("Time:"+currentTimeMs+" Accumulated:"+accumulatedMove);
+            //Debug.Log("Time:"+currentTimeMs+" Accumulated:"+accumulatedMove);            
+            ClientMessageMoveJoy movejoy = new ClientMessageMoveJoy();
+            movejoy.moveVector.x = accumulatedMove.x;
+            movejoy.moveVector.y = accumulatedMove.y;
+            ServerConnection.Send(movejoy);
+
             lastUpdateMs = currentTimeMs;
             accumulatedMove.x = 0;
             accumulatedMove.y = 0;
-            
-            ClientMessageMoveJoy movejoy = new ClientMessageMoveJoy();
-            ServerConnection.Send(movejoy);
         }
     }
 }

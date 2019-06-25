@@ -14,6 +14,7 @@ namespace ClientMessages
 {
     public class ServerConnection
     {
+        private static bool initalized = false;
         public static UdpCNetworkDriver driver;
         public static NetworkConnection serverConnection;
 
@@ -21,11 +22,13 @@ namespace ClientMessages
         {
             driver = _driver;
             serverConnection = _serverConnection;
+            initalized = true;
         }
 
         public static void Send(ClientMessageBase msg) 
         {
-            msg.SendTo(driver, serverConnection);
+            if (initalized)
+                msg.SendTo(driver, serverConnection);
         }
     }
 
@@ -182,11 +185,12 @@ namespace ClientMessages
  
         public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
-            using (var writer = new DataStreamWriter(4, Allocator.Temp))
+            using (var writer = new DataStreamWriter(8*3, Allocator.Temp))
             {
                 writer.Write(id);
                 writer.Write(moveVector.x);
                 writer.Write(moveVector.y);
+                Debug.Log("Sending joy:"+moveVector);
                 peer.Send(driver, writer);
             }
         }
