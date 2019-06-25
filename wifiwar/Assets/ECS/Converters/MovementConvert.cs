@@ -13,8 +13,7 @@ public class MovementConvert : MonoBehaviour, IConvertGameObjectToEntity
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         var movement = new MovementComponent();
-        //movement.direction = MovementDirection.UP_LEFT;
-        movement.speed = speed;
         dstManager.AddComponentData(entity, movement);
+        MovementSystem.SetMaxSpeed(speed);
     }
 }
