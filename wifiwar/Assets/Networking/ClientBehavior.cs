@@ -7,7 +7,7 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Networking.Transport;
-
+using UnityEditor.VersionControl;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;
 
@@ -43,7 +43,7 @@ struct ClientUpdateJob : IJob
 		
         DataStreamReader stream;
         NetworkEvent.Type cmd;
-		
+        
         while ((cmd = connection[0].PopEvent(driver, out stream)) != 
                NetworkEvent.Type.Empty)
         {
@@ -51,10 +51,10 @@ struct ClientUpdateJob : IJob
             {
                 case NetworkEvent.Type.Connect:
                     Debug.Log("CLIENT: Our client is now connected to the server");
-                    
+                    ServerConnection.init(driver, connection[0]);            
                     // Sending a hello...
                     ClientMessageHello hello = new ClientMessageHello();
-                    hello.SendTo(driver, connection[0]);
+                    ServerConnection.Send(hello);
                     break;
                 case NetworkEvent.Type.Data:
                     Debug.Log("CLIENT: Got Back data from the server.");

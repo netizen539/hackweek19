@@ -6,12 +6,14 @@
       <e p="Assets" t="Include">
         <e p="ECS" t="Include">
           <e p="Components" t="Include">
+            <e p="MovementComponent.cs" t="Include" />
             <e p="RotationSpeedComponent.cs" t="Include" />
           </e>
           <e p="Converters" t="Include">
             <e p="RotationSpeedConvert.cs" t="Include" />
           </e>
           <e p="Systems" t="Include">
+            <e p="MovementSystem.cs" t="Include" />
             <e p="RotationSystem.cs" t="Include" />
           </e>
         </e>
