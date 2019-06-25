@@ -7,6 +7,7 @@ using ServerMessages;
 using UnityEngine;
 using Unity.Networking.Transport;
 using Unity.Collections;
+using Unity.Entities;
 using Unity.Jobs;
 using UnityEngine.Assertions;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
@@ -14,7 +15,7 @@ using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.
 
 static class IncomingClientMessageParser
 {
-    public static void ParseIncomingMessage(DataStreamReader stream)
+    public static void ParseIncomingMessage(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
     {
         var readerCtx = default(DataStreamReader.Context);
         uint messageID = stream.ReadUInt(ref readerCtx);
@@ -22,7 +23,7 @@ static class IncomingClientMessageParser
         if (messageID == ClientMessages.ClientMessageHello.id)
         {
             ClientMessageHello hello = new ClientMessageHello();
-            hello.Recieve(stream);
+            hello.Recieve(connectionIndex, commandBuffer, stream);
         }
     }
 }
@@ -56,7 +57,8 @@ struct ServerUpdateJob : IJobParallelForDefer
 {
     public UdpCNetworkDriver.Concurrent driver;
     public NativeArray<NetworkConnection> connections;
-
+    public EntityCommandBuffer.Concurrent commandBuffer;
+    
     public void Execute(int index)
     {
         DataStreamReader stream;
@@ -77,9 +79,7 @@ struct ServerUpdateJob : IJobParallelForDefer
                     Debug.Log("SERVER: Client data detected");
                     try
                     {
-                        IncomingClientMessageParser.ParseIncomingMessage(stream);
-                        ServerMessageHello hello = new ServerMessageHello();
-                        hello.SendTo(driver, connections[index]);
+                        IncomingClientMessageParser.ParseIncomingMessage(index, commandBuffer, stream);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -109,6 +109,9 @@ public class ServerBehavior : MonoBehaviour
     private JobHandle ServerJobHandle;
 
     public ushort listenPort;
+    
+    BeginSimulationEntityCommandBufferSystem ecbSystem;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +121,8 @@ public class ServerBehavior : MonoBehaviour
             Debug.Log("SERVER: Failed to bind to port 9000");
         else
             m_Driver.Listen();
+        
+        ecbSystem = World.Active.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
     }
     
     public void OnDestroy()
@@ -143,11 +148,14 @@ public class ServerBehavior : MonoBehaviour
         var serverUpdateJob = new ServerUpdateJob
         {
             driver = m_Driver.ToConcurrent(),
-            connections = m_Connections.AsDeferredJobArray()
+            connections = m_Connections.AsDeferredJobArray(),
+            commandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent()
         };
         
         ServerJobHandle = m_Driver.ScheduleUpdate();
         ServerJobHandle = connectionJob.Schedule(ServerJobHandle);
-        ServerJobHandle = serverUpdateJob.Schedule(m_Connections, 1, ServerJobHandle);        
+        ServerJobHandle = serverUpdateJob.Schedule(m_Connections, 1, ServerJobHandle);
+        ecbSystem.AddJobHandleForProducer(ServerJobHandle);
+
     }
 }
