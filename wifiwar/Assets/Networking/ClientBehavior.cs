@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using ClientMessages;
+using ServerMessages;
 using UnityEngine;
 using Unity.Jobs;
 using Unity.Collections;
@@ -7,6 +10,21 @@ using Unity.Networking.Transport;
 
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;
+
+static class IncomingServerMessageParser
+{
+    public static void ParseIncomingMessage(DataStreamReader stream)
+    {
+        var readerCtx = default(DataStreamReader.Context);
+        uint messageID = stream.ReadUInt(ref readerCtx);
+
+        if (messageID == ServerMessages.ServerMessageHello.id)
+        {
+            ServerMessageHello hello = new ServerMessageHello();
+            hello.Recieve(stream);
+        }
+    }
+}
 
 struct ClientUpdateJob : IJob
 {
@@ -33,9 +51,23 @@ struct ClientUpdateJob : IJob
             {
                 case NetworkEvent.Type.Connect:
                     Debug.Log("CLIENT: Our client is now connected to the server");
+                    
+                    // Sending a hello...
+                    ClientMessageHello hello = new ClientMessageHello();
+                    hello.SendTo(driver, connection[0]);
                     break;
                 case NetworkEvent.Type.Data:
                     Debug.Log("CLIENT: Got Back data from the server.");
+                    try
+                    {
+                        IncomingServerMessageParser.ParseIncomingMessage(stream);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Debug.Log("CLIENT: IndexOutOfRange, bad server data?? disconnecting.");
+                        connection[0] = default(NetworkConnection);
+                    }
+
                     break;
                 case NetworkEvent.Type.Disconnect:
                     Debug.Log("CLIENT: Our client was disconnected from the server");

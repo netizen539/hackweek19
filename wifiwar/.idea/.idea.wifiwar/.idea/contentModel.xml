@@ -17,6 +17,11 @@
         </e>
         <e p="Networking" t="Include">
           <e p="ClientBehavior.cs" t="Include" />
+          <e p="Messages" t="Include">
+            <e p="ClientMessages.cs" t="Include" />
+            <e p="MessageProtocol.cs" t="Include" />
+            <e p="ServerMessages.cs" t="Include" />
+          </e>
           <e p="ServerBehavior.cs" t="Include" />
         </e>
       </e>

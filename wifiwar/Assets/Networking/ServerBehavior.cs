@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using ClientMessages;
+using ServerMessages;
 using UnityEngine;
 using Unity.Networking.Transport;
 using Unity.Collections;
@@ -9,7 +12,20 @@ using UnityEngine.Assertions;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;
 
+static class IncomingClientMessageParser
+{
+    public static void ParseIncomingMessage(DataStreamReader stream)
+    {
+        var readerCtx = default(DataStreamReader.Context);
+        uint messageID = stream.ReadUInt(ref readerCtx);
 
+        if (messageID == ClientMessages.ClientMessageHello.id)
+        {
+            ClientMessageHello hello = new ClientMessageHello();
+            hello.Recieve(stream);
+        }
+    }
+}
 struct ServerUpdateConnectionsJob : IJob
 {
     public UdpCNetworkDriver driver;
@@ -54,10 +70,23 @@ struct ServerUpdateJob : IJobParallelForDefer
             switch (cmd)
             {
                 case NetworkEvent.Type.Connect:
+                    // doesnt seem to be run... not used on server?
                     Debug.Log("SERVER: Client Connection detected");
                     break;
                 case NetworkEvent.Type.Data:
                     Debug.Log("SERVER: Client data detected");
+                    try
+                    {
+                        IncomingClientMessageParser.ParseIncomingMessage(stream);
+                        ServerMessageHello hello = new ServerMessageHello();
+                        hello.SendTo(driver, connections[index]);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Debug.Log("SERVER: IndexOutOfRange, bad client data?? disconnecting.");
+                        connections[index] = default(NetworkConnection);
+                    }
+
                     break;
                 case NetworkEvent.Type.Disconnect:
                     Debug.Log("SERVER: Client Disconnected");
