@@ -42,8 +42,8 @@ public class MovementSystem : JobComponentSystem
             }
             var movementVec = directions[(int) movement.direction];
             movementVec.x = movementVec.x * movementSpeed + translation.Value.x;
-            movementVec.y = movementVec.y * movementSpeed + translation.Value.y;
-            translation.Value = new float3(movementVec.x, movementVec.y, 0);
+            movementVec.y = movementVec.y * movementSpeed + translation.Value.z;
+            translation.Value = new float3(movementVec.x, 0, movementVec.y);
         }
     }
     
