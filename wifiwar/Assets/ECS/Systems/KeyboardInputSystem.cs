@@ -37,7 +37,7 @@ public class KeyboardInputSystem : JobComponentSystem
         if (TryGetMovementDirection(out direction))
         {
             job.direction = direction;
-            job.speed = 0.5f;
+            job.speed = MovementSystem.MaxSpeed;
         }
         else
         {
