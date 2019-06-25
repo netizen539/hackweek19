@@ -24,6 +24,22 @@ static class IncomingClientMessageParser
         {
             ClientMessageHello hello = new ClientMessageHello();
             hello.Recieve(connectionIndex, commandBuffer, stream);
+        } else if (messageID == ClientMessageGoodbye.id)
+        {
+            ClientMessageGoodbye msg = new ClientMessageGoodbye();
+            msg.Recieve(connectionIndex, commandBuffer, stream);
+        } else if (messageID == ClientMessageMove.id)
+        {
+            ClientMessageMove msg = new ClientMessageMove();
+            msg.Recieve(connectionIndex, commandBuffer, stream);
+        } else if (messageID == ClientMessageFire.id)
+        {
+            ClientMessageFire msg = new ClientMessageFire();
+            msg.Recieve(connectionIndex, commandBuffer, stream);
+        } else if (messageID == ClientMessageShield.id)
+        {
+            ClientMessageShield msg = new ClientMessageShield();
+            msg.Recieve(connectionIndex, commandBuffer, stream);
         }
     }
 }
