@@ -16,8 +16,10 @@ public abstract class BaseInputSystem : JobComponentSystem
 
         public void Execute(ref MovementComponent movement)
         {
-            movement.direction = direction;
             movement.speed = speed;
+            // if not moving, keep direction the same
+            if (speed > 0)
+                movement.direction = direction;
         }
     }
     
