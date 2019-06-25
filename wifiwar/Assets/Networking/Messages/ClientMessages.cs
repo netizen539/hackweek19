@@ -51,7 +51,7 @@ namespace ClientMessages
             {
                 writer.Write(id);
                 peer.Send(driver, writer);
-            }            
+            }
         }
 
         public static void Recieve(DataStreamReader stream)
@@ -62,5 +62,30 @@ namespace ClientMessages
             Debug.Log("SERVER: A client says goodbye.");            
         }
 
+    }
+
+    public class ClientMessageMove
+    {
+        public static uint id
+        {
+            get { return (ushort) MessageIDs.CLIENT_MOVE; }
+        }
+
+        public static void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        {
+            using (var writer = new DataStreamWriter(4, Allocator.Temp))
+            {
+                writer.Write(id);
+                peer.Send(driver, writer);
+            }
+        }
+
+        public static void Recieve(DataStreamReader stream)
+        {
+            var readerCtx = default(DataStreamReader.Context);
+            uint number = stream.ReadUInt(ref readerCtx);
+
+            Debug.Log("SERVER: A client wants to move.");
+        }
     }
 }
