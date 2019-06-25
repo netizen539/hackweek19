@@ -19,6 +19,7 @@
         </e>
         <e p="Networking" t="Include">
           <e p="ClientBehavior.cs" t="Include" />
+          <e p="KeepAlive.cs" t="Include" />
           <e p="Messages" t="Include">
             <e p="ClientMessages.cs" t="Include" />
             <e p="MessageProtocol.cs" t="Include" />
@@ -26,6 +27,15 @@
           </e>
           <e p="ServerBehavior.cs" t="Include" />
         </e>
+        <e p="PlayGrounds" t="Include">
+          <e p="Dan" t="Include">
+            <e p="Script" t="Include">
+              <e p="TriggerVolumeBehaviour.cs" t="Include" />
+              <e p="TriggerVolumeChangeMaterialSystem.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Spawner_Mono.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive">
