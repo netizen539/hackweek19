@@ -9,6 +9,7 @@ using Unity.Networking.Transport;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine.Assertions;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;

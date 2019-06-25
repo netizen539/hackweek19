@@ -170,4 +170,35 @@ namespace ClientMessages
             Debug.Log("SERVER: A client wants to use their shield.");
         }
     }
+    
+    public class ClientMessageMoveJoy : ClientMessageBase
+    {
+        public Vector2 moveVector;
+        
+        public static uint id
+        {
+            get { return (ushort) MessageIDs.CLIENT_MOVE_JOY; }
+        }
+ 
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        {
+            using (var writer = new DataStreamWriter(4, Allocator.Temp))
+            {
+                writer.Write(id);
+                writer.Write(moveVector.x);
+                writer.Write(moveVector.y);
+                peer.Send(driver, writer);
+            }
+        }
+ 
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        {
+            var readerCtx = default(DataStreamReader.Context);
+            uint number = stream.ReadUInt(ref readerCtx);
+            float x = stream.ReadFloat(ref readerCtx);
+            float y = stream.ReadFloat(ref readerCtx);
+ 
+            Debug.Log("SERVER: Client Sent Joy:"+x+","+y);
+        }
+    }
 }
