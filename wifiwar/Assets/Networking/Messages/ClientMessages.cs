@@ -30,9 +30,9 @@ namespace ClientMessages
 
     public abstract class ClientMessageBase
     {
-        public virtual void SendTo(UdpCNetworkDriver driver, NetworkConnection peer) {}
+        public abstract void SendTo(UdpCNetworkDriver driver, NetworkConnection peer);
 
-        public virtual void Recieve(DataStreamReader stream) {}
+        public abstract void Recieve(DataStreamReader stream);
     }
 
     public class ClientMessageHello : ClientMessageBase
@@ -42,7 +42,7 @@ namespace ClientMessages
             get { return (ushort) MessageIDs.CLIENT_HELLO; }
         }
         
-        public new void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
             using (var writer = new DataStreamWriter(4, Allocator.Temp))
             {
@@ -51,7 +51,7 @@ namespace ClientMessages
             }
         }
 
-        public new void Recieve(DataStreamReader stream)
+        public override void Recieve(DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -68,7 +68,7 @@ namespace ClientMessages
             get { return (ushort) MessageIDs.CLIENT_GOODBYE; }
         }
         
-        public void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
             using (var writer = new DataStreamWriter(4, Allocator.Temp))
             {
@@ -77,7 +77,7 @@ namespace ClientMessages
             }
         }
 
-        public void Recieve(DataStreamReader stream)
+        public override void Recieve(DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -96,7 +96,7 @@ namespace ClientMessages
              get { return (ushort) MessageIDs.CLIENT_MOVE; }
          }
  
-         public void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+         public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
          {
              using (var writer = new DataStreamWriter(4, Allocator.Temp))
              {
@@ -106,7 +106,7 @@ namespace ClientMessages
              }
          }
  
-         public void Recieve(DataStreamReader stream)
+         public override void Recieve(DataStreamReader stream)
          {
              var readerCtx = default(DataStreamReader.Context);
              uint number = stream.ReadUInt(ref readerCtx);
@@ -122,7 +122,7 @@ namespace ClientMessages
             get { return (ushort) MessageIDs.CLIENT_FIRE; }
         }
 
-        public new void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
             using (var writer = new DataStreamWriter(4, Allocator.Temp))
             {
@@ -131,7 +131,7 @@ namespace ClientMessages
             }
         }
 
-        public new void Recieve(DataStreamReader stream)
+        public override void Recieve(DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -147,7 +147,7 @@ namespace ClientMessages
             get { return (ushort) MessageIDs.CLIENT_SHIELD; }
         }
 
-        public new void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
             using (var writer = new DataStreamWriter(4, Allocator.Temp))
             {
@@ -156,7 +156,7 @@ namespace ClientMessages
             }
         }
 
-        public new void Recieve(DataStreamReader stream)
+        public override void Recieve(DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
