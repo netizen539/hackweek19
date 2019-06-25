@@ -17,7 +17,7 @@ public class ExpandSystem : JobComponentSystem
     // The job is also tagged with the BurstCompile attribute, which means
     // that the Burst compiler will optimize it for the best performance.
     [BurstCompile]
-    struct ExpandSystemJob : IJobForEach<CompositeScale>
+    struct ExpandSystemJob : IJobForEach<CompositeScale, ShieldComponent>
     {
         // Add fields here that your job needs to do its work.
         // For example,
@@ -27,7 +27,7 @@ public class ExpandSystem : JobComponentSystem
 
 
 
-        public void Execute(ref CompositeScale compositeScale)
+        public void Execute(ref CompositeScale compositeScale, [ReadOnly] ref ShieldComponent shieldComponent)
         {
             // Implement the work to perform for each entity here.
             // You should only access data that is local or that is a
