@@ -42,6 +42,11 @@ static class IncomingClientMessageParser
             ClientMessageShield msg = new ClientMessageShield();
             msg.Recieve(connectionIndex, commandBuffer, stream);
         }
+        else if (messageID == ClientMessageMoveJoy.id)
+        {
+             ClientMessageMoveJoy msg = new ClientMessageMoveJoy();
+             msg.Recieve(connectionIndex, commandBuffer, stream);
+        }
     }
 }
 struct ServerUpdateConnectionsJob : IJob
