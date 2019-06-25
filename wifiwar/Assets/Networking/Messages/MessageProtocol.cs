@@ -8,6 +8,7 @@ namespace MessageProtocol
     {
         CLIENT_HELLO=1,
         CLIENT_GOODBYE,
+        CLIENT_MOVE,
         CLIENT_LAST_UNUSED=100,
         SERVER_HELLO,
         SERVER_GOODBYE
