@@ -11,6 +11,7 @@ namespace MessageProtocol
         CLIENT_MOVE,
         CLIENT_FIRE,
         CLIENT_SHIELD,
+        CLIENT_MOVE_JOY,
         CLIENT_LAST_UNUSED=100,
         SERVER_HELLO,
         SERVER_GOODBYE

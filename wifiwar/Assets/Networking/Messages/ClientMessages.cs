@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MessageProtocol;
 using ServerMessages;
 using Unity.Collections;
+using Unity.Entities;
 using Unity.Networking.Transport;
 using UnityEngine;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
@@ -13,6 +14,7 @@ namespace ClientMessages
 {
     public class ServerConnection
     {
+        private static bool initalized = false;
         public static UdpCNetworkDriver driver;
         public static NetworkConnection serverConnection;
 
@@ -20,11 +22,13 @@ namespace ClientMessages
         {
             driver = _driver;
             serverConnection = _serverConnection;
+            initalized = true;
         }
 
         public static void Send(ClientMessageBase msg) 
         {
-            msg.SendTo(driver, serverConnection);
+            if (initalized)
+                msg.SendTo(driver, serverConnection);
         }
     }
 
@@ -32,7 +36,7 @@ namespace ClientMessages
     {
         public abstract void SendTo(UdpCNetworkDriver driver, NetworkConnection peer);
 
-        public abstract void Recieve(DataStreamReader stream);
+        public abstract void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream);
     }
 
     public class ClientMessageHello : ClientMessageBase
@@ -51,13 +55,18 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(DataStreamReader stream)
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
             Debug.Log("SERVER: A client says hello.");
+
+            /* A client has connected. Create an entity to represent the client's player
+              and assign components as needed */
+            var entity = commandBuffer.CreateEntity(connectionIndex);
+            var networkComponent = new NetworkComponent() {connectionIdx = connectionIndex};
+            commandBuffer.AddComponent(connectionIndex, entity, networkComponent);
             
-            ServerMessageHello hello = new ServerMessageHello();
         }
     }
 
@@ -77,7 +86,7 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(DataStreamReader stream)
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -106,7 +115,7 @@ namespace ClientMessages
              }
          }
  
-         public override void Recieve(DataStreamReader stream)
+         public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
          {
              var readerCtx = default(DataStreamReader.Context);
              uint number = stream.ReadUInt(ref readerCtx);
@@ -131,7 +140,7 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(DataStreamReader stream)
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -156,12 +165,44 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(DataStreamReader stream)
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
 
             Debug.Log("SERVER: A client wants to use their shield.");
+        }
+    }
+    
+    public class ClientMessageMoveJoy : ClientMessageBase
+    {
+        public Vector2 moveVector;
+        
+        public static uint id
+        {
+            get { return (ushort) MessageIDs.CLIENT_MOVE_JOY; }
+        }
+ 
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        {
+            using (var writer = new DataStreamWriter(8*3, Allocator.Temp))
+            {
+                writer.Write(id);
+                writer.Write(moveVector.x);
+                writer.Write(moveVector.y);
+                Debug.Log("Sending joy:"+moveVector);
+                peer.Send(driver, writer);
+            }
+        }
+ 
+        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        {
+            var readerCtx = default(DataStreamReader.Context);
+            uint number = stream.ReadUInt(ref readerCtx);
+            float x = stream.ReadFloat(ref readerCtx);
+            float y = stream.ReadFloat(ref readerCtx);
+ 
+            Debug.Log("SERVER: Client Sent Joy:"+x+","+y);
         }
     }
 }

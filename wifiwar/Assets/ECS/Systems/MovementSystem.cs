@@ -8,6 +8,18 @@ using static Unity.Mathematics.math;
 
 public class MovementSystem : JobComponentSystem
 {
+    private static float maxSpeed;
+    
+    public static float MaxSpeed
+    {
+        get { return maxSpeed; }
+    }
+
+    public static void SetMaxSpeed(float speed)
+    {
+        maxSpeed = speed;
+    }
+    
     public static readonly float2[] directions = new float2[] {
         new float2(0, 1),
         new float2(1, 1),
@@ -42,8 +54,8 @@ public class MovementSystem : JobComponentSystem
             }
             var movementVec = directions[(int) movement.direction];
             movementVec.x = movementVec.x * movementSpeed + translation.Value.x;
-            movementVec.y = movementVec.y * movementSpeed + translation.Value.y;
-            translation.Value = new float3(movementVec.x, movementVec.y, 0);
+            movementVec.y = movementVec.y * movementSpeed + translation.Value.z;
+            translation.Value = new float3(movementVec.x, 0, movementVec.y);
         }
     }
     
