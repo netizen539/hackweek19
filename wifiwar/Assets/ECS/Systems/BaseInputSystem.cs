@@ -11,7 +11,6 @@ public abstract class BaseInputSystem : JobComponentSystem
     [BurstCompile]
     struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
     {
-        //public MovementDirection direction;
         public float2 directionAxisPlayer;
         public float speed;
 
@@ -20,7 +19,6 @@ public abstract class BaseInputSystem : JobComponentSystem
             movement.speed = speed;
             // if not moving, keep direction the same
             if (speed > 0)
-                // movement.direction = direction;
                 movement.playerDirectionAxis = directionAxisPlayer;
         }
     }
@@ -28,12 +26,6 @@ public abstract class BaseInputSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
         var job = new MovementInputSystemJob();
-        /*MovementDirection direction;
-        if (TryGetMovementDirection(out direction))
-        {
-            job.direction = direction;
-            job.speed = MovementSystem.MaxSpeed;
-        }*/
 
         float2 directionAxis;
         if (TryGetMovementDirectionAxis(out directionAxis))
@@ -71,7 +63,6 @@ public abstract class BaseInputSystem : JobComponentSystem
         return job.Schedule(this, inputDependencies);
     }
 
-    //protected abstract bool TryGetMovementDirection(out MovementDirection direction);
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
     protected abstract bool TryGetShield();
     protected abstract bool Fire();
