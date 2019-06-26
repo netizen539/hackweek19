@@ -1,7 +1,5 @@
-﻿using Unity.Burst;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
 using Unity.Mathematics;
@@ -15,7 +13,6 @@ public struct ReadyToSpawnBulletComponent : IComponentData
 
 public class SpawnProjectileSystem : ComponentSystem
 {
-
 	protected override void OnUpdate()
 	{
 		var getBulletTemplateQuery = GetEntityQuery(ComponentType.ReadOnly<BulletTemplateComponent>());
@@ -45,42 +42,20 @@ public class SpawnProjectileSystem : ComponentSystem
 			};
 
 			Quaternion playerRotation = playerRotationComponent.Value;
-			Vector3 playerRotationEuler = playerRotation.eulerAngles;
-
-
-
-
-			float2 playerDirectionAxis = playerMovementComponent.playerDirectionAxis;
-
-
-			//var bulletTranslation = new float3(playerTranslation.Value.x += playerDirectionAxis.x * 5, playerTranslation.Value.y, playerTranslation.Value.z += playerDirectionAxis.y * 5);
-			Vector3 bulletTranslation = new Vector3(playerTranslation.Value.x, playerTranslation.Value.y, playerTranslation.Value.z);
-			//Quaternion newBulletRotaion = quaternion.AxisAngle(new float3(0F, 0F, 5F), math.atan2(playerTranslation.Value.x, playerTranslation.Value.z));
-			//Quaternion newBulletRotaion = Quaternion.AngleAxis(playerRotation.y, Vector3.up);
-			//bulletTranslation += playerRotationEuler.normalized * 5;
-
 			Matrix4x4 m = Matrix4x4.Rotate(playerRotation);
 			Vector3 bulletDirection = m.MultiplyPoint3x4(Vector3.forward).normalized;
+			Vector3 bulletTranslation = new Vector3(playerTranslation.Value.x, playerTranslation.Value.y, playerTranslation.Value.z);
 			bulletTranslation += bulletDirection * 0.7f;
-			//bulletTranslation += newBulletRotaion.normalized.eulerAngles * 5;
-
-			//bulletTranslation.y = 0;
-			//Debug.Log("bulletTranslation: " + bulletTranslation);
-			//Debug.Log("playerTranslation: " + playerTranslation.Value);
-			//Debug.Log("normalizedPlayerRotation: " + playerRotationEuler.normalized);
 
 			var movementData = new MovementComponent
 			{
-				//playerDirectionAxis = playerMovementComponent.playerDirectionAxis,
 				playerDirectionAxis = new Vector2(bulletDirection.x, bulletDirection.z),
-
 				speed = bulletTemplateData.Speed
 			};
 
 			EntityManager.AddComponentData(bullet, projectileData);
 			EntityManager.AddComponentData(bullet, movementData);
 			EntityManager.SetComponentData(bullet, new Translation { Value = bulletTranslation });
-
 		}
 
 		spawnPoints.Dispose();
