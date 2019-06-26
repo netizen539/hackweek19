@@ -62,13 +62,7 @@ namespace ClientMessages
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
             Debug.Log("SERVER: A client says hello.");
-
-            /* A client has connected. Create an entity to represent the client's player
-              and assign components as needed */
-            var entity = commandBuffer.CreateEntity(connectionIndex);
-            var networkComponent = new NetworkComponent() {connectionIdx = connectionIndex};
-            commandBuffer.AddComponent(connectionIndex, entity, networkComponent);
-            
+            PrefabEntityLibrary.PlayerSpawnQueue.Enqueue(connectionIndex);
         }
     }
 
