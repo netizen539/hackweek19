@@ -69,4 +69,9 @@ public class KeyboardInputSystem : BaseInputSystem
         
         return shieldActive;
     }
+
+    protected override bool Fire()
+    {
+        return Input.GetKeyDown(KeyCode.Return);
+    }
 }
