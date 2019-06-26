@@ -56,12 +56,12 @@ public class SpawnProjectileSystem : ComponentSystem
 			//var bulletTranslation = new float3(playerTranslation.Value.x += playerDirectionAxis.x * 5, playerTranslation.Value.y, playerTranslation.Value.z += playerDirectionAxis.y * 5);
 			Vector3 bulletTranslation = new Vector3(playerTranslation.Value.x, playerTranslation.Value.y, playerTranslation.Value.z);
 			//Quaternion newBulletRotaion = quaternion.AxisAngle(new float3(0F, 0F, 5F), math.atan2(playerTranslation.Value.x, playerTranslation.Value.z));
-			Quaternion newBulletRotaion = Quaternion.AngleAxis(playerRotation.y, Vector3.up);
-			bulletTranslation += playerRotationEuler.normalized * 5;
+			//Quaternion newBulletRotaion = Quaternion.AngleAxis(playerRotation.y, Vector3.up);
+			//bulletTranslation += playerRotationEuler.normalized * 5;
 
 			Matrix4x4 m = Matrix4x4.Rotate(playerRotation);
 			Vector3 bulletDirection = m.MultiplyPoint3x4(Vector3.forward).normalized;
-			bulletTranslation += bulletDirection * 0.5f;
+			bulletTranslation += bulletDirection * 0.7f;
 			//bulletTranslation += newBulletRotaion.normalized.eulerAngles * 5;
 
 			//bulletTranslation.y = 0;
