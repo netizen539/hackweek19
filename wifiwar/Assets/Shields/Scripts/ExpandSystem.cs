@@ -39,7 +39,7 @@ public class ExpandSystem : JobComponentSystem
             // For example,
             //     translation.Value += mul(rotation.Value, new float3(0, 0, 1)) * deltaTime;
 
-            Debug.Log("shieldOn = " + shieldComponent.shieldOn);
+            //Debug.Log("shieldOn = " + shieldComponent.shieldOn);
 
             if (shieldComponent.shieldOn)
             {
