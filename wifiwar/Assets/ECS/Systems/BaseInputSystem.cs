@@ -8,62 +8,63 @@ using static Unity.Mathematics.math;
 
 public abstract class BaseInputSystem : JobComponentSystem
 {
-    [BurstCompile]
-    struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
-    {
-        public float2 directionAxisPlayer;
-        public float speed;
+	[BurstCompile]
+	struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
+	{
+		public float2 directionAxisPlayer;
+		public float speed;
 
-        public void Execute([ReadOnly] ref PlayerComponent player, ref MovementComponent movement)
-        {
-            movement.speed = speed;
-            // if not moving, keep direction the same
-            if (speed > 0)
-                movement.playerDirectionAxis = directionAxisPlayer;
-        }
-    }
-    
-    protected override JobHandle OnUpdate(JobHandle inputDependencies)
-    {
-        var job = new MovementInputSystemJob();
+		public void Execute([ReadOnly] ref PlayerComponent player, ref MovementComponent movement)
+		{
+			movement.speed = speed;
+			// if not moving, keep direction the same
+			if (speed > 0)
+				movement.playerDirectionAxis = directionAxisPlayer;
+		}
+	}
 
-        float2 directionAxis;
-        if (TryGetMovementDirectionAxis(out directionAxis))
-        {
-            job.directionAxisPlayer = directionAxis;
-            job.speed = MovementSystem.MaxSpeed;
-        }
-        else
-        {
-            job.speed = 0;
-        }
+	protected override JobHandle OnUpdate(JobHandle inputDependencies)
+	{
+		var job = new MovementInputSystemJob();
 
-        bool shieldAction = TryGetShield();
-        bool fireAction = Fire();
-        if (shieldAction || fireAction)
-        {
-            var query = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
-            using (var players = query.ToEntityArray(Allocator.TempJob))
-                foreach (var e in players)
-                {
-                    if (shieldAction)
-                    {
-                        var shield = EntityManager.GetComponentData<ShieldComponent>(e);
-                        shield.shieldOn = !shield.shieldOn;
-                        EntityManager.SetComponentData(e, shield);
-                    }
+		float2 directionAxis;
+		if (TryGetMovementDirectionAxis(out directionAxis))
+		{
+			job.directionAxisPlayer = directionAxis;
+			job.speed = MovementSystem.MaxSpeed;
+		}
+		else
+		{
+			job.speed = 0;
+		}
 
-                    if (fireAction)
-                    {
-                        // TODO
-                    }
-                }
-        }
+		bool shieldAction = TryGetShield();
+		bool fireAction = Fire();
+		if (shieldAction || fireAction)
+		{
+			var query = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
+			using (var players = query.ToEntityArray(Allocator.TempJob))
+				foreach (var e in players)
+				{
+					if (shieldAction)
+					{
+						var shield = EntityManager.GetComponentData<ShieldComponent>(e);
+						shield.shieldOn = !shield.shieldOn;
+						EntityManager.SetComponentData(e, shield);
+					}
 
-        return job.Schedule(this, inputDependencies);
-    }
+					if (fireAction)
+					{
+						// TODO
+						EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
+					}
+				}
+		}
 
-    protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
-    protected abstract bool TryGetShield();
-    protected abstract bool Fire();
+		return job.Schedule(this, inputDependencies);
+	}
+
+	protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
+	protected abstract bool TryGetShield();
+	protected abstract bool Fire();
 }
