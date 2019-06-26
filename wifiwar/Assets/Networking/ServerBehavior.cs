@@ -16,7 +16,8 @@ using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.
 
 static class IncomingClientMessageParser
 {
-    public static void ParseIncomingMessage(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+    public static void ParseIncomingMessage(NetworkConnection connection, DataStreamReader stream,
+        EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
     {
         var readerCtx = default(DataStreamReader.Context);
         uint messageID = stream.ReadUInt(ref readerCtx);
@@ -24,28 +25,28 @@ static class IncomingClientMessageParser
         if (messageID == ClientMessages.ClientMessageHello.id)
         {
             ClientMessageHello hello = new ClientMessageHello();
-            hello.Recieve(connectionIndex, commandBuffer, stream);
+            hello.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         } else if (messageID == ClientMessageGoodbye.id)
         {
             ClientMessageGoodbye msg = new ClientMessageGoodbye();
-            msg.Recieve(connectionIndex, commandBuffer, stream);
+            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         } else if (messageID == ClientMessageMove.id)
         {
             ClientMessageMove msg = new ClientMessageMove();
-            msg.Recieve(connectionIndex, commandBuffer, stream);
+            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         } else if (messageID == ClientMessageFire.id)
         {
             ClientMessageFire msg = new ClientMessageFire();
-            msg.Recieve(connectionIndex, commandBuffer, stream);
+            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         } else if (messageID == ClientMessageShield.id)
         {
             ClientMessageShield msg = new ClientMessageShield();
-            msg.Recieve(connectionIndex, commandBuffer, stream);
+            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         }
         else if (messageID == ClientMessageMoveJoy.id)
         {
              ClientMessageMoveJoy msg = new ClientMessageMoveJoy();
-             msg.Recieve(connectionIndex, commandBuffer, stream);
+             msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         }
     }
 }
@@ -101,7 +102,7 @@ struct ServerUpdateJob : IJobParallelForDefer
                     Debug.Log("SERVER: Client data detected");
                     try
                     {
-                        IncomingClientMessageParser.ParseIncomingMessage(index, commandBuffer, stream);
+                        IncomingClientMessageParser.ParseIncomingMessage(connections[index], stream, commandBuffer, index, driver);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
