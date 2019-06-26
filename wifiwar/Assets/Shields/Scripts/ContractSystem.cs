@@ -4,10 +4,9 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 using static Unity.Mathematics.math;
 
-public class ExpandSystem : JobComponentSystem
+public class ContractSystem : JobComponentSystem
 {
     // This declares a new kind of job, which is a unit of work to do.
     // The job is declared as an IJobForEach<Translation, Rotation>,
@@ -18,13 +17,13 @@ public class ExpandSystem : JobComponentSystem
     // The job is also tagged with the BurstCompile attribute, which means
     // that the Burst compiler will optimize it for the best performance.
     [BurstCompile]
-    struct ExpandSystemJob : IJobForEach<NonUniformScale, ShieldComponent>
+    struct ContractSystemJob : IJobForEach<NonUniformScale, ShieldComponent>
     {
         // Add fields here that your job needs to do its work.
         // For example,
+        //    public float deltaTime;
         public float deltaTime;
         public float scaleSize;
-
 
 
 
@@ -39,42 +38,30 @@ public class ExpandSystem : JobComponentSystem
             // For example,
             //     translation.Value += mul(rotation.Value, new float3(0, 0, 1)) * deltaTime;
 
-            Debug.Log("shieldOn = " + shieldComponent.shieldOn);
 
-            if (shieldComponent.shieldOn)
+            if (!shieldComponent.shieldOn)
             {
-                if (scale.Value.x >= 1f) return;
-                scale.Value *= scaleSize * 2;
-                
+                if (scale.Value.x <= 0.1f) return;
+                scale.Value *= scaleSize * 0.5f;
+
             }
-
-            
-
-
-
-
-            //if (compositeScale.Value.c0.x >= 3f)
-            //    return;
-
-            //compositeScale.Value.c0.x = scaleSize * compositeScale.Value.c0.x;
-            //compositeScale.Value.c1.y = scaleSize * compositeScale.Value.c1.y;
-            //compositeScale.Value.c2.z = scaleSize * compositeScale.Value.c2.z;
 
         }
     }
     
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
-        var job = new ExpandSystemJob();
-        
+        var job = new ContractSystemJob();
+
         // Assign values to the fields on your job here, so that it has
         // everything it needs to do its work when it runs later.
         // For example,
+        //     job.deltaTime = UnityEngine.Time.deltaTime;
         job.deltaTime = UnityEngine.Time.deltaTime;
         job.scaleSize = 1.01f;
-      
-        
-        
+
+
+
         // Now that the job is set up, schedule it to be run. 
         return job.Schedule(this, inputDependencies);
     }
