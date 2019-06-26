@@ -41,24 +41,6 @@ public class MovementSystem : JobComponentSystem
         public void Execute(ref Translation translation, [ReadOnly] ref Rotation rotation, [ReadOnly] ref MovementComponent movement)
         {
             float movementSpeed = movement.speed * deltaTime;
-            /* 
-             switch (movement.direction)
-             {
-                 case MovementDirection.UP_RIGHT:
-                 case MovementDirection.DOWN_RIGHT:
-                 case MovementDirection.DOWN_LEFT:
-                 case MovementDirection.UP_LEFT:
-                 {
-                     movementSpeed /= sqrt(2.0f);
-                     break;
-                 }
-             }
-             var movementVec = directions[(int) movement.direction];
-             movementVec.x = movementVec.x * movementSpeed + translation.Value.x;
-             movementVec.y = movementVec.y * movementSpeed + translation.Value.z;
-             translation.Value = new float3(movementVec.x, 0, movementVec.y);
-             */
-
             translation.Value.x += movement.playerDirectionAxis.x * 0.05f;
             translation.Value.z += movement.playerDirectionAxis.y * 0.05f;
 
