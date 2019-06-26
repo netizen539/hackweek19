@@ -46,17 +46,27 @@ public abstract class BaseInputSystem : JobComponentSystem
             job.speed = 0;
         }
 
-        if (TryGetShield())
-            foreach (var e in EntityManager.GetAllEntities())
-            {
-                if (EntityManager.HasComponent<ShieldComponent>(e))
+        bool shieldAction = TryGetShield();
+        bool fireAction = Fire();
+        if (shieldAction || fireAction)
+        {
+            var query = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
+            using (var players = query.ToEntityArray(Allocator.TempJob))
+                foreach (var e in players)
                 {
-                   var shield = EntityManager.GetComponentData<ShieldComponent>(e);
-                    shield.shieldOn = !shield.shieldOn;
-                    EntityManager.SetComponentData(e, shield);
-                }
+                    if (shieldAction)
+                    {
+                        var shield = EntityManager.GetComponentData<ShieldComponent>(e);
+                        shield.shieldOn = !shield.shieldOn;
+                        EntityManager.SetComponentData(e, shield);
+                    }
 
-            }
+                    if (fireAction)
+                    {
+                        // TODO
+                    }
+                }
+        }
 
         return job.Schedule(this, inputDependencies);
     }
@@ -64,4 +74,5 @@ public abstract class BaseInputSystem : JobComponentSystem
     //protected abstract bool TryGetMovementDirection(out MovementDirection direction);
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
     protected abstract bool TryGetShield();
+    protected abstract bool Fire();
 }
