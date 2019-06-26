@@ -41,8 +41,8 @@ public class MovementSystem : JobComponentSystem
         public void Execute(ref Translation translation, [ReadOnly] ref Rotation rotation, [ReadOnly] ref MovementComponent movement)
         {
             float movementSpeed = movement.speed * deltaTime;
-            translation.Value.x += movement.playerDirectionAxis.x * 0.05f;
-            translation.Value.z += movement.playerDirectionAxis.y * 0.05f;
+            translation.Value.x += movement.playerDirectionAxis.x * movementSpeed;
+            translation.Value.z += movement.playerDirectionAxis.y * movementSpeed;
 
         }
     }
