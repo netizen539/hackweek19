@@ -9,7 +9,7 @@ using static Unity.Mathematics.math;
 
 public class KeyboardInputSystem : BaseInputSystem
 {
-    protected override bool TryGetMovementDirection(out MovementDirection direction)
+    /*protected override bool TryGetMovementDirection(out MovementDirection direction)
     {
         direction = MovementDirection.UP;
         
@@ -48,6 +48,14 @@ public class KeyboardInputSystem : BaseInputSystem
             direction = MovementDirection.RIGHT;
         
 
+        return true;
+    }*/
+
+    protected override bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis)
+    {
+        float2 directionAxis = new float2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        playerDirectionAxis = directionAxis;
         return true;
     }
 

@@ -15,8 +15,11 @@ public class RotationSystem_just : JobComponentSystem
     {
         public void Execute(ref Rotation rotation, [ReadOnly] ref MovementComponent movement)
         {
-            float rotationAngle = 0.7854F;
-            rotation.Value = quaternion.AxisAngle(new float3(0F, 1F, 0F), rotationAngle * ((int)movement.direction));
+            //  float rotationAngle = 0.7854F;
+            //  rotation.Value = quaternion.AxisAngle(new float3(0F, 1F, 0F), rotationAngle * ((int)movement.direction));
+
+            rotation.Value = quaternion.AxisAngle(new float3(0F, 1F, 0F), math.atan2(movement.playerDirectionAxis.x, movement.playerDirectionAxis.y));
+
         }
     }
 

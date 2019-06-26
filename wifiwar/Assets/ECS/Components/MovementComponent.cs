@@ -20,4 +20,5 @@ public struct MovementComponent : IComponentData
 {
     public MovementDirection direction;
     public float speed;
+    public float2 playerDirectionAxis;
 }
