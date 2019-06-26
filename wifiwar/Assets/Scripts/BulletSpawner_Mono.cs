@@ -32,7 +32,7 @@ public class BulletSpawner_Mono : MonoBehaviour
 		entityManager.AddComponentData(instance, new ProjectileComponent
 		{
 			Speed = this.Speed,
-			forward = transform.parent.forward,
+			forward = PlayerTransform.forward,
 			lifeTime = LifeTime
 
 		});
