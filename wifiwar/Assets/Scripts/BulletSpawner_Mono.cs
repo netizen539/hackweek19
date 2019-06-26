@@ -34,8 +34,9 @@ public class BulletSpawner_Mono : MonoBehaviour
 			Speed = this.Speed,
 			forward = transform.parent.forward,
 			lifeTime = LifeTime
-			
+
 		});
+		entityManager.AddComponentData(instance, new DeadlyTag());
 	}
 
 	private Quaternion CalculateBulletDirection()
