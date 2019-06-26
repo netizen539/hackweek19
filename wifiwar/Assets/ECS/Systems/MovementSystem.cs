@@ -20,17 +20,6 @@ public class MovementSystem : JobComponentSystem
         maxSpeed = speed;
     }
     
-    public static readonly float2[] directions = new float2[] {
-        new float2(0, 1),
-        new float2(1, 1),
-        new float2(1, 0),
-        new float2(1, -1),
-        new float2(0, -1),
-        new float2(-1, -1),
-        new float2(-1, 0),
-        new float2(-1, 1), 
-    };
-
     [BurstCompile]
     struct MovementSystemJob : IJobForEach<Translation, Rotation, MovementComponent>
     {
