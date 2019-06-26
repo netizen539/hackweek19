@@ -46,7 +46,19 @@ public class KeyboardInputSystem : BaseInputSystem
             direction = MovementDirection.LEFT;
         else
             direction = MovementDirection.RIGHT;
+        
 
         return true;
+    }
+
+
+
+
+    protected override bool TryGetShield()
+    {
+        
+        bool shieldActive = Input.GetKeyDown(KeyCode.Space);
+        
+        return shieldActive;
     }
 }

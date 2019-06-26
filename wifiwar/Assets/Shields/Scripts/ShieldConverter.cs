@@ -31,7 +31,7 @@ public class ShieldConverter : MonoBehaviour, IConvertGameObjectToEntity
         //
         // For example,
         //   dstManager.AddComponentData(entity, new Unity.Transforms.Scale { Value = scale });
-        var data = new ShieldComponent() {  };
+        var data = new ShieldComponent() {shieldOn = shieldOn};
         dstManager.AddComponentData(entity, data);
 
     }

@@ -36,8 +36,22 @@ public abstract class BaseInputSystem : JobComponentSystem
         {
             job.speed = 0;
         }
+
+        if (TryGetShield())
+            foreach (var e in EntityManager.GetAllEntities())
+            {
+                if (EntityManager.HasComponent<ShieldComponent>(e))
+                {
+                   var shield = EntityManager.GetComponentData<ShieldComponent>(e);
+                    shield.shieldOn = !shield.shieldOn;
+                    EntityManager.SetComponentData(e, shield);
+                }
+
+            }
+
         return job.Schedule(this, inputDependencies);
     }
 
     protected abstract bool TryGetMovementDirection(out MovementDirection direction);
+    protected abstract bool TryGetShield();
 }
