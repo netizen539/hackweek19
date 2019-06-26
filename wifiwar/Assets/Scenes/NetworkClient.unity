@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20af550e1ac3347298044dd1456dda79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverAddress: "10.45.82.114\x13"
+  serverAddress: 10.45.82.74
   serverPort: 9001
 --- !u!4 &394330524
 Transform:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1312482111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd7780abc4e324d239bc9097a68fe3f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 34803192b51e25141bb54076e86275c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   updateRateMs: 0.1

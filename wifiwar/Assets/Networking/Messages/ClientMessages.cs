@@ -36,7 +36,8 @@ namespace ClientMessages
     {
         public abstract void SendTo(UdpCNetworkDriver driver, NetworkConnection peer);
 
-        public abstract void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream);
+        public abstract void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver);
     }
 
     public class ClientMessageHello : ClientMessageBase
@@ -55,7 +56,8 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -86,7 +88,8 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -115,7 +118,8 @@ namespace ClientMessages
              }
          }
  
-         public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+         public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+             EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
          {
              var readerCtx = default(DataStreamReader.Context);
              uint number = stream.ReadUInt(ref readerCtx);
@@ -140,7 +144,8 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -165,7 +170,8 @@ namespace ClientMessages
             }
         }
 
-        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -195,7 +201,8 @@ namespace ClientMessages
             }
         }
  
-        public override void Recieve(int connectionIndex, EntityCommandBuffer.Concurrent commandBuffer, DataStreamReader stream)
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
@@ -204,5 +211,36 @@ namespace ClientMessages
  
             Debug.Log("SERVER: Client Sent Joy:"+x+","+y);
         }
+    }
+
+    public class ClientMessagePing : ClientMessageBase
+    {
+        public static uint id
+        {
+            get { return (ushort) MessageIDs.CLIENT_PING; }
+        }
+        
+        public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
+        {
+            using (var writer = new DataStreamWriter(4, Allocator.Temp))
+            {
+                writer.Write(id);
+                peer.Send(driver, writer);
+            }
+
+        }
+
+        public override void Recieve(NetworkConnection connection, DataStreamReader stream,
+            EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
+        {
+            var readerCtx = default(DataStreamReader.Context);
+            uint number = stream.ReadUInt(ref readerCtx);
+            Debug.Log("SERVER: Client Ping");
+            
+            ServerMessagePong pong = new ServerMessagePong();
+            pong.SendTo(driver, connection);
+
+        }
+        
     }
 }

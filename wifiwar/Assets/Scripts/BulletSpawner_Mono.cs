@@ -7,6 +7,7 @@ public class BulletSpawner_Mono : MonoBehaviour
 	public GameObject BulletTemplate;
 	public Transform PlayerTransform;
 	public int Speed = 5;
+	public float LifeTime = 10;
 
 	private void Update()
 	{
@@ -31,8 +32,11 @@ public class BulletSpawner_Mono : MonoBehaviour
 		entityManager.AddComponentData(instance, new ProjectileComponent
 		{
 			Speed = this.Speed,
-			forward = transform.parent.forward
+			forward = PlayerTransform.forward,
+			lifeTime = LifeTime
+
 		});
+		entityManager.AddComponentData(instance, new DeadlyTag());
 	}
 
 	private Quaternion CalculateBulletDirection()
