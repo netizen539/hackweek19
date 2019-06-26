@@ -4,4 +4,5 @@ public struct ProjectileComponent : IComponentData
 {
 	public int Speed;
 	public Vector3 forward;
+	public float lifeTime;
 }

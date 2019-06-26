@@ -538,3 +538,4 @@ MonoBehaviour:
     type: 3}
   PlayerTransform: {fileID: 105942978}
   Speed: 20
+  LifeTime: 10
