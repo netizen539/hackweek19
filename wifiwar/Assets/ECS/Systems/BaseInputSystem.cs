@@ -50,7 +50,7 @@ public abstract class BaseInputSystem : JobComponentSystem
         bool fireAction = Fire();
         if (shieldAction || fireAction)
         {
-            var query = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
+            var query = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
             using (var players = query.ToEntityArray(Allocator.TempJob))
                 foreach (var e in players)
                 {
