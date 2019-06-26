@@ -9,13 +9,13 @@ using static Unity.Mathematics.math;
 public abstract class BaseInputSystem : JobComponentSystem
 {
     [BurstCompile]
-    struct MovementInputSystemJob : IJobForEach<MovementComponent>
+    struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
     {
         //public MovementDirection direction;
         public float2 directionAxisPlayer;
         public float speed;
 
-        public void Execute(ref MovementComponent movement)
+        public void Execute([ReadOnly] ref PlayerComponent player, ref MovementComponent movement)
         {
             movement.speed = speed;
             // if not moving, keep direction the same
