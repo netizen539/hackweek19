@@ -4,6 +4,7 @@ using MessageProtocol;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Networking.Transport;
+using Unity.Rendering;
 using UnityEngine;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;
