@@ -6,6 +6,7 @@ public class MoveProjectileSystem : ComponentSystem
 {
 	protected override void OnUpdate()
 	{
+		/*
 		Entities.ForEach((ref ProjectileComponent projectile, ref Translation translation, ref Rotation rotation) =>
 		{
 			var deltaTime = Time.deltaTime;
@@ -14,5 +15,6 @@ public class MoveProjectileSystem : ComponentSystem
 
 			translation = new Translation { Value = newTranslation };
 		});
+		*/
 	}
 }
