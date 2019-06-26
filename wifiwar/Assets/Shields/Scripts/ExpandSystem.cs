@@ -17,7 +17,7 @@ public class ExpandSystem : JobComponentSystem
     // The job is also tagged with the BurstCompile attribute, which means
     // that the Burst compiler will optimize it for the best performance.
     [BurstCompile]
-    struct ExpandSystemJob : IJobForEach<CompositeScale, ShieldComponent>
+    struct ExpandSystemJob : IJobForEach<NonUniformScale, ShieldComponent>
     {
         // Add fields here that your job needs to do its work.
         // For example,
@@ -27,7 +27,7 @@ public class ExpandSystem : JobComponentSystem
 
 
 
-        public void Execute(ref CompositeScale compositeScale, [ReadOnly] ref ShieldComponent shieldComponent)
+        public void Execute(ref NonUniformScale scale, [ReadOnly] ref ShieldComponent shieldComponent)
         {
             // Implement the work to perform for each entity here.
             // You should only access data that is local or that is a
@@ -37,12 +37,15 @@ public class ExpandSystem : JobComponentSystem
             // that want to read Rotation component data.
             // For example,
             //     translation.Value += mul(rotation.Value, new float3(0, 0, 1)) * deltaTime;
-            if (compositeScale.Value.c0.x >= 3f)
-                return;
+            if (scale.Value.x >= 3f) return;
+            scale.Value *= scaleSize;
 
-            compositeScale.Value.c0.x = scaleSize * compositeScale.Value.c0.x;
-            compositeScale.Value.c1.y = scaleSize * compositeScale.Value.c1.y;
-            compositeScale.Value.c2.z = scaleSize * compositeScale.Value.c2.z;
+            //if (compositeScale.Value.c0.x >= 3f)
+            //    return;
+
+            //compositeScale.Value.c0.x = scaleSize * compositeScale.Value.c0.x;
+            //compositeScale.Value.c1.y = scaleSize * compositeScale.Value.c1.y;
+            //compositeScale.Value.c2.z = scaleSize * compositeScale.Value.c2.z;
 
         }
     }
