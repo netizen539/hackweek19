@@ -11,8 +11,8 @@ public class KeepAlive : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
             Debug.Log("Keep Alive Hello Sent ");
-            ClientMessageHello hello = new ClientMessageHello();
-            ServerConnection.Send(hello);
+            ClientMessagePing ping = new ClientMessagePing();
+            ServerConnection.Send(ping);
         }
     }
     

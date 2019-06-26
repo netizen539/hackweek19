@@ -13,7 +13,7 @@ using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.
 
 static class IncomingServerMessageParser
 {
-    public static void ParseIncomingMessage(DataStreamReader stream)
+    public static void ParseIncomingMessage(UdpCNetworkDriver driver, NetworkConnection connection, DataStreamReader stream)
     {
         var readerCtx = default(DataStreamReader.Context);
         uint messageID = stream.ReadUInt(ref readerCtx);
@@ -21,7 +21,11 @@ static class IncomingServerMessageParser
         if (messageID == ServerMessages.ServerMessageHello.id)
         {
             ServerMessageHello hello = new ServerMessageHello();
-            hello.Recieve(stream);
+            hello.Recieve(driver, connection, stream);
+        } else if (messageID == ServerMessagePong.id)
+        {
+            ServerMessagePong pong = new ServerMessagePong();
+            pong.Recieve(driver, connection, stream);
         }
     }
 }
@@ -60,7 +64,7 @@ struct ClientUpdateJob : IJob
                     Debug.Log("CLIENT: Got Back data from the server.");
                     try
                     {
-                        IncomingServerMessageParser.ParseIncomingMessage(stream);
+                        IncomingServerMessageParser.ParseIncomingMessage(driver, connection[0], stream);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -70,8 +74,9 @@ struct ClientUpdateJob : IJob
 
                     break;
                 case NetworkEvent.Type.Disconnect:
-                    Debug.Log("CLIENT: Our client was disconnected from the server");
-                    connection[0] = default(NetworkConnection);
+                    Debug.Log("CLIENT: Our client was disconnected...");
+                    //connection[0] = default(NetworkConnection);
+                   // connection[0] = driver.Connect(endpoint);
                     break;
                 
             }

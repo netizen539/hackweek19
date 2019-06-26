@@ -12,8 +12,10 @@ namespace MessageProtocol
         CLIENT_FIRE,
         CLIENT_SHIELD,
         CLIENT_MOVE_JOY,
+        CLIENT_PING,
         CLIENT_LAST_UNUSED=100,
         SERVER_HELLO,
-        SERVER_GOODBYE
+        SERVER_GOODBYE,
+        SERVER_PONG
     };
 }
