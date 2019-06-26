@@ -45,7 +45,6 @@ public class SpawnProjectileSystem : ComponentSystem
 
 			var movementData = new MovementComponent
 			{
-				direction = playerMovementComponent.direction,
 				playerDirectionAxis = playerMovementComponent.playerDirectionAxis,
 				speed = bulletTemplateData.Speed
 			};
