@@ -37,7 +37,6 @@ namespace ServerMessages
         {
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
-
             Debug.Log("CLIENT: Server says hello.");
         }
     }

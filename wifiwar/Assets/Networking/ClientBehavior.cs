@@ -21,7 +21,11 @@ static class IncomingServerMessageParser
         if (messageID == ServerMessages.ServerMessageHello.id)
         {
             ServerMessageHello hello = new ServerMessageHello();
-           // hello.Recieve(stream);
+            hello.Recieve(driver, connection, stream);
+        } else if (messageID == ServerMessagePong.id)
+        {
+            ServerMessagePong pong = new ServerMessagePong();
+            pong.Recieve(driver, connection, stream);
         }
     }
 }
