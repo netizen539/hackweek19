@@ -47,6 +47,10 @@ static class IncomingClientMessageParser
         {
              ClientMessageMoveJoy msg = new ClientMessageMoveJoy();
              msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
+        } else if (messageID == ClientMessagePing.id)
+        {
+            ClientMessagePing msg = new ClientMessagePing();
+            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         }
     }
 }
