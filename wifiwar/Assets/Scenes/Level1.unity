@@ -704,22 +704,22 @@ PrefabInstance:
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06058902
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.67928815
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0564431
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.72918504
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
@@ -729,17 +729,17 @@ PrefabInstance:
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.669
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -85.998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -9.476001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048976455821417317, guid: 8eec1b83a30ed74448c9f9569b6293c2,
         type: 3}
@@ -832,14 +832,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677199295}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.70710677}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 693425664}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &677199299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,8 +889,8 @@ MonoBehaviour:
     z: 1
   m_PrimitiveOrientation:
     Value:
-      x: 0
-      y: 90
+      x: 90
+      y: 0
       z: 0
     RotationOrder: 4
   m_Capsule:
@@ -945,7 +945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
