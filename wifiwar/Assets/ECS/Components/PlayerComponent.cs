@@ -6,5 +6,5 @@ using Unity.Mathematics;
 [Serializable]
 public struct PlayerComponent : IComponentData
 {
-    public int kills;
+    public uint kills;
 }
