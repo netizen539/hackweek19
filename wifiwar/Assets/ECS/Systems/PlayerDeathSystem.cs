@@ -53,6 +53,7 @@ public class PlayerDeathSystem : ComponentSystem
 				movement.playerDirectionAxis = new float2();
 				EntityManager.SetComponentData(deadPlayer, respawnData);
 				EntityManager.SetComponentData(deadPlayer, movement);
+				EntityManager.SetComponentData(deadPlayer, new NewPowerUpComponent());
 			}
 		}
 	}
