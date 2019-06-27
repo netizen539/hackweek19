@@ -44,13 +44,16 @@ public class PlayerDeathSystem : ComponentSystem
 			foreach (var deadPlayer in deadPlayers)
 			{
 				EntityManager.RemoveComponent<PlayerComponent>(deadPlayer);
+				var respawnData = EntityManager.GetComponentData<PlayerRespawnComponent>(deadPlayer);
 				var playerTranslation = EntityManager.GetComponentData<Translation>(deadPlayer);
-				playerTranslation.Value.x = 0;
-				playerTranslation.Value.z = 0;
+				respawnData.translation = playerTranslation.Value;
+				playerTranslation.Value.x = -1000;
 				EntityManager.SetComponentData(deadPlayer, playerTranslation);
 				var movement = EntityManager.GetComponentData<MovementComponent>(deadPlayer);
 				movement.playerDirectionAxis = new float2();
+				EntityManager.SetComponentData(deadPlayer, respawnData);
 				EntityManager.SetComponentData(deadPlayer, movement);
+				EntityManager.SetComponentData(deadPlayer, new NewPowerUpComponent());
 			}
 		}
 	}

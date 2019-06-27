@@ -139,8 +139,7 @@ public abstract class BaseInputSystem : JobComponentSystem
 				{
 					if (!EntityManager.HasComponent<PlayerComponent>(player))
 					{
-						EntityManager.RemoveComponent<HitByDeadlyComponent>(player);
-						EntityManager.AddComponentData(player, new PlayerComponent { kills = 0 });
+                        EntityManager.AddComponentData(player, new RespawnRequest());
 						break;
 					}
 				}
