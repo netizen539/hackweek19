@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using static Unity.Mathematics.math;
 using UnityEngine;
+using float3 = Unity.Mathematics.float3;
 
 public abstract class BaseInputSystem : JobComponentSystem
 {
@@ -87,6 +88,23 @@ public abstract class BaseInputSystem : JobComponentSystem
                     EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
 		}
 
+		if (Respawn())
+		{
+			var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent), typeof(DestroyTag));
+			using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
+				foreach (var player in deadPlayers)
+				{
+					if (!EntityManager.HasComponent<PlayerComponent>(player))
+					{
+						EntityManager.RemoveComponent<HitByDeadlyComponent>(player);
+						EntityManager.RemoveComponent<DestroyTag>(player);
+						EntityManager.AddComponentData(player, new PlayerComponent { kills = 0 });
+						//EntityManager.SetComponentData(player, new Translation { Value = float3.zero });
+						break;
+					}
+				}
+		}
+
         return job.Schedule(this, inputDependencies);
 	}
 #if UNITY_EDITOR
@@ -96,4 +114,5 @@ public abstract class BaseInputSystem : JobComponentSystem
 #endif
     protected abstract bool TryGetShield();
 	protected abstract bool Fire();
+	protected abstract bool Respawn();
 }

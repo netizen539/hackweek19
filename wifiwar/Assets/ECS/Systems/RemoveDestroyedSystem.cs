@@ -2,6 +2,8 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
 
 public class RemoveDestroyedSystem : JobComponentSystem
 {
@@ -13,14 +15,16 @@ public class RemoveDestroyedSystem : JobComponentSystem
 	}
 
 	//[BurstCompile]
-	struct RemoveDestroyedEntities : IJobForEachWithEntity<DestroyTag>
+	struct RemoveDestroyedEntities : IJobForEachWithEntity<DestroyTag, Translation>
 	{
 		[WriteOnly]
 		public EntityCommandBuffer.Concurrent CommandBuffer;
 
-		public void Execute(Entity entity, int index, [ReadOnly] ref DestroyTag c0)
+		public void Execute(Entity entity, int index, [ReadOnly] ref DestroyTag c0, ref Translation translation)
 		{
-			CommandBuffer.DestroyEntity(index, entity);
+			//CommandBuffer.DestroyEntity(index, entity);
+			CommandBuffer.RemoveComponent<PlayerComponent>(index, entity);
+			translation.Value = new float3(0, translation.Value.y, 0);
 		}
 	}
 
