@@ -29,7 +29,7 @@ public abstract class BaseInputSystem : JobComponentSystem
 
         }
     }
-
+#if UNITY_EDITOR
     [BurstCompile]
     struct MovementInputSystemJobPlayer2 : IJobForEach<PlayerComponent, Player2_tag, MovementComponent>
     {
@@ -44,11 +44,12 @@ public abstract class BaseInputSystem : JobComponentSystem
             // if not moving, keep direction the same
             if (speed > 0)
             {
-              //  movement.playerDirectionAxis = directionAxisPlayer;
+                movement.playerDirectionAxis = directionAxisPlayer;
             }
 
         }
     }
+#endif
 
     // Dummy job, because if all players die, other jobs no longer run and this system does not run
     struct InputSystemJob : IJobForEach<Player1_tag>
@@ -60,10 +61,10 @@ public abstract class BaseInputSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
         var job1 = new MovementInputSystemJobPlayer1();
-        var job2 = new MovementInputSystemJobPlayer2();
-
         float2 directionAxis;
+
 #if UNITY_EDITOR
+        var job2 = new MovementInputSystemJobPlayer2();
         float2 directionAxis2;
         if (TryGetMovementDirectionAxis(out directionAxis, out directionAxis2
 #else
@@ -74,14 +75,16 @@ public abstract class BaseInputSystem : JobComponentSystem
             job1.directionAxisPlayer = directionAxis;
 #if UNITY_EDITOR
             job2.directionAxisPlayer = directionAxis2;
+            job2.speed = MovementSystem.MaxSpeed;
 #endif
             job1.speed = MovementSystem.MaxSpeed;
-            job2.speed = MovementSystem.MaxSpeed;
         }
         else
         {
             job1.speed = 0;
+#if UNITY_EDITOR
             job2.speed = 0;
+#endif
         }
 
 
@@ -146,7 +149,12 @@ public abstract class BaseInputSystem : JobComponentSystem
 		}
 
 		var dummy = new InputSystemJob();
+#if UNITY_EDITOR
         return dummy.Schedule(this,job2.Schedule(this, job1.Schedule(this, inputDependencies)));
+#else
+        return dummy.Schedule(this, job1.Schedule(this, inputDependencies));
+#endif
+
     }
 #if UNITY_EDITOR
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis, out float2 player2DirectionAxis);
