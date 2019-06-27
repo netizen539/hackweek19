@@ -75,7 +75,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
         struct PowerUpTriggerJob : ITriggerEventsJob
         {
             public ComponentDataFromEntity<PowerUpTriggerComponent> PowerUpTriggerGroup;
-            public ComponentDataFromEntity<NewPowerUpComponent> NewPoweUpGroup;
+            public ComponentDataFromEntity<NewPowerUpComponent> NewPowerUpGroup;
             public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
             [ReadOnly]
             public ComponentDataFromEntity<WallTag> WallGroup;
@@ -127,23 +127,30 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 else if (powerUpComponent.enabled)
                 {
                     CommandBuffer.AddComponent<PlayerHit>(triggerEntity, new PlayerHit());
+
+                    
                     powerUpComponent.enabled = false;
+                    var newPowerUpComponent_Dynamic = NewPowerUpGroup[dynamicEntity];
 
                     if (powerUpComponent.isSwordPowerUp)
+                    {
                         CommandBuffer.AddComponent<GotSword>(dynamicEntity, new GotSword());
+                    }
                     else if(powerUpComponent.isGunPowerUp)
+                    {
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
+                    }
                     else if (powerUpComponent.isSpeed)
                     {
-                        var newPowerUpComponent = NewPoweUpGroup[dynamicEntity];
-                        newPowerUpComponent.powerType = PowerUpTypes.Speed;
-                        NewPoweUpGroup[dynamicEntity] = newPowerUpComponent;
+                        newPowerUpComponent_Dynamic.powerType = PowerUpTypes.Speed;
                     }
-                        
                     else if (powerUpComponent.isSpreadshot)
-                        CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
+                    {
+                        newPowerUpComponent_Dynamic.powerType = PowerUpTypes.SpreadShot;
+                        //CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
+                    }
 
-
+                    NewPowerUpGroup[dynamicEntity] = newPowerUpComponent_Dynamic;
                     PowerUpTriggerGroup[triggerEntity] = powerUpComponent;
                 }
             }
@@ -159,7 +166,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 WallGroup = GetComponentDataFromEntity<WallTag>(true),
                 DestroyGroup = GetComponentDataFromEntity<DestroyTag>(true),
                 HitByDeadlyGroup = GetComponentDataFromEntity<HitByDeadlyComponent>(true),
-                NewPoweUpGroup = GetComponentDataFromEntity<NewPowerUpComponent>(false),
+                NewPowerUpGroup = GetComponentDataFromEntity<NewPowerUpComponent>(false),
                 CommandBuffer = ecbSystem.CreateCommandBuffer()
             }.Schedule(m_StepPhysicsWorldSystem.Simulation,
                         ref m_BuildPhysicsWorldSystem.PhysicsWorld, inputDeps);
