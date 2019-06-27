@@ -18,6 +18,8 @@ public struct PowerUpTriggerComponent : IComponentData
     public bool enabled;
     public bool isSwordPowerUp;
     public bool isGunPowerUp;
+    public bool isSpreadshot;
+    public bool isSpeed;
     public bool isDeadly;
 }
 
@@ -25,6 +27,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
 {
     public bool isSwordPowerUp;
     public bool isGunPowerUp;
+    public bool isSpreadShot;
+    public bool isSpeed;
     public bool isDeadly;
 
     void IConvertGameObjectToEntity.Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -37,6 +41,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 isGunPowerUp = isGunPowerUp,
                 isSwordPowerUp = isSwordPowerUp,
                 isDeadly = isDeadly,
+                isSpreadshot = isSpreadShot,
+                isSpeed = isSpeed
             });
         }
     }
@@ -124,6 +130,10 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                     if (powerUpComponent.isSwordPowerUp)
                         CommandBuffer.AddComponent<GotSword>(dynamicEntity, new GotSword());
                     else if(powerUpComponent.isGunPowerUp)
+                        CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
+                    else if (powerUpComponent.isSpreadshot)
+                        CommandBuffer.AddComponent<PowerUpSpeedTag>(dynamicEntity, new PowerUpSpeedTag());
+                    else if (powerUpComponent.isSpreadshot)
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
 
 
