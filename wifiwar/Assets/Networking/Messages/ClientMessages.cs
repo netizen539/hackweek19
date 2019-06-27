@@ -158,7 +158,7 @@ namespace ClientMessages
  
         public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
-            using (var writer = new DataStreamWriter(8*3, Allocator.Temp))
+            using (var writer = new DataStreamWriter(8*300, Allocator.Temp))
             {
                 writer.Write(id);
                 writer.Write(moveVector.x);

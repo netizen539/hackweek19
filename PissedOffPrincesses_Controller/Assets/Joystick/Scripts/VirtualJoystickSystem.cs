@@ -20,6 +20,11 @@ namespace Joystick
     /// </summary>
     public class VirtualJoystickSystem : ComponentSystem
     {
+        protected override void OnStartRunning()
+        {
+            ServerSystem.ConnectToServer(127,0,0,1, 9002);
+        }
+        
         protected override void OnUpdate()
         {
             var displayInfo = World.TinyEnvironment().GetConfigData<DisplayInfo>();
@@ -92,6 +97,10 @@ namespace Joystick
                     {
                         normalizedDirection.y += 1f;
                         magnitudeRatio = 1f;
+                        //ServerSystem.ConnectToServer(127,0,0,1, 9002);
+                        //#if UNITY_WEBGL
+                            ServerSystem.SendJoystickToServer(0.3f,0.2f);
+                        //#endif
                     }
                     if (input.GetKey(KeyCode.A) || input.GetKey(KeyCode.LeftArrow))
                     {
