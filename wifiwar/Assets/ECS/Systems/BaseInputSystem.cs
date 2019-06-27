@@ -10,41 +10,52 @@ using float3 = Unity.Mathematics.float3;
 
 public abstract class BaseInputSystem : JobComponentSystem
 {
-	[BurstCompile]
-	struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
-	{
-		public float2 directionAxisPlayer;
-#if UNITY_EDITOR
-        public float2 directionAxisPlayer2;
-#endif
+    [BurstCompile]
+    struct MovementInputSystemJobPlayer1 : IJobForEach<Player1_tag, MovementComponent>
+    {
+        public float2 directionAxisPlayer;
 
         public float speed;
 
-		public void Execute([ReadOnly] ref PlayerComponent player, ref MovementComponent movement)
-		{
-			movement.speed = speed;
+        public void Execute([ReadOnly] ref Player1_tag player, ref MovementComponent movement)
+        {
+            movement.speed = speed;
 
             // if not moving, keep direction the same
             if (speed > 0)
             {
-#if UNITY_EDITOR
-                if (player.isPlayer1)
-                    movement.playerDirectionAxis = directionAxisPlayer;
-                else
-                    movement.playerDirectionAxis = directionAxisPlayer2;
-#else
-                    movement.playerDirectionAxis = directionAxisPlayer;
-#endif
+                movement.playerDirectionAxis = directionAxisPlayer;
             }
 
         }
-	}
+    }
+
+    [BurstCompile]
+    struct MovementInputSystemJobPlayer2 : IJobForEach<Player2_tag, MovementComponent>
+    {
+        public float2 directionAxisPlayer;
+
+        public float speed;
+
+        public void Execute([ReadOnly] ref Player2_tag player, ref MovementComponent movement)
+        {
+            movement.speed = speed;
+
+            // if not moving, keep direction the same
+            if (speed > 0)
+            {
+                movement.playerDirectionAxis = directionAxisPlayer;
+            }
+
+        }
+    }
 
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
-	{
-		var job = new MovementInputSystemJob();
+    {
+        var job1 = new MovementInputSystemJobPlayer1();
+        var job2 = new MovementInputSystemJobPlayer2();
 
-		float2 directionAxis;
+        float2 directionAxis;
 #if UNITY_EDITOR
         float2 directionAxis2;
         if (TryGetMovementDirectionAxis(out directionAxis, out directionAxis2
@@ -53,19 +64,21 @@ public abstract class BaseInputSystem : JobComponentSystem
 #endif
             ))
         {
-            job.directionAxisPlayer = directionAxis;
+            job1.directionAxisPlayer = directionAxis;
 #if UNITY_EDITOR
-            job.directionAxisPlayer2 = directionAxis2;
+            job2.directionAxisPlayer = directionAxis2;
 #endif
-            job.speed = MovementSystem.MaxSpeed;
-		}
-		else
-		{
-			job.speed = 0;
-		}
+            job1.speed = MovementSystem.MaxSpeed;
+            job2.speed = MovementSystem.MaxSpeed;
+        }
+        else
+        {
+            job1.speed = 0;
+            job2.speed = 0;
+        }
 
-        
-		bool shieldAction = TryGetShield();
+
+        bool shieldAction = TryGetShield();
 		bool fireAction = Fire();
 
 		if (shieldAction)
@@ -105,8 +118,8 @@ public abstract class BaseInputSystem : JobComponentSystem
 				}
 		}
 
-        return job.Schedule(this, inputDependencies);
-	}
+        return job2.Schedule(this, job1.Schedule(this, inputDependencies));
+    }
 #if UNITY_EDITOR
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis, out float2 player2DirectionAxis);
 #else
