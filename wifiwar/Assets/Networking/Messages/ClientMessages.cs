@@ -4,7 +4,9 @@ using MessageProtocol;
 using ServerMessages;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Networking.Transport;
+using Unity.Physics.Extensions;
 using UnityEngine;
 using UdpCNetworkDriver = Unity.Networking.Transport.GenericNetworkDriver<Unity.Networking.Transport.IPv4UDPSocket, 
     Unity.Networking.Transport.DefaultPipelineStageCollection>;
@@ -156,7 +158,7 @@ namespace ClientMessages
  
         public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
         {
-            using (var writer = new DataStreamWriter(8*3, Allocator.Temp))
+            using (var writer = new DataStreamWriter(8*300, Allocator.Temp))
             {
                 writer.Write(id);
                 writer.Write(moveVector.x);
