@@ -37,8 +37,7 @@ public class SpawnProjectileSystem : ComponentSystem
 			var projectileData = new ProjectileComponent
 			{
 				Speed = bulletTemplateData.Speed,
-				lifeTime = bulletTemplateData.LifeTime,
-				forward = readyToSpawnComponent.Forward
+				LifeTime = bulletTemplateData.LifeTime,
 			};
 
 			Quaternion playerRotation = playerRotationComponent.Value;
