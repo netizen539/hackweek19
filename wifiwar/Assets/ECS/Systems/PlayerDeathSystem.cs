@@ -3,9 +3,11 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using static Unity.Mathematics.math;
+using float3 = Unity.Mathematics.float3;
 
 public class PlayerDeathSystem : ComponentSystem
 {
@@ -46,6 +48,9 @@ public class PlayerDeathSystem : ComponentSystem
 				playerTranslation.Value.x = 0;
 				playerTranslation.Value.z = 0;
 				EntityManager.SetComponentData(deadPlayer, playerTranslation);
+				var movement = EntityManager.GetComponentData<MovementComponent>(deadPlayer);
+				movement.playerDirectionAxis = new float2();
+				EntityManager.SetComponentData(deadPlayer, movement);
 			}
 		}
 	}
