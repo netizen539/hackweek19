@@ -44,7 +44,7 @@ public abstract class BaseInputSystem : JobComponentSystem
             // if not moving, keep direction the same
             if (speed > 0)
             {
-                movement.playerDirectionAxis = directionAxisPlayer;
+              //  movement.playerDirectionAxis = directionAxisPlayer;
             }
 
         }

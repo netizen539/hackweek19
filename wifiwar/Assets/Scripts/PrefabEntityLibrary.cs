@@ -11,24 +11,24 @@ public class PrefabEntityLibrary : MonoBehaviour
     public GameObject playerPrefab;
 
    // public static Queue<ClientContext> PlayerSpawnQueue;
-   public static LockFreeQueue<int> PlayerSpawnQueue;
+   public static LockFreeQueue<string> PlayerSpawnQueue;
 
    private EntityManager em;
    
     // Start is called before the first frame update
     void Start()
     {
-        PlayerSpawnQueue = new LockFreeQueue<int>();
+        PlayerSpawnQueue = new LockFreeQueue<string>();
         em = World.Active.EntityManager;
     }
 
     // Update is called once per frame
     void Update()
     {
-        int connectionIndex;
-        if (PlayerSpawnQueue.Dequeue(out connectionIndex))
+        string clientId;
+        if (PlayerSpawnQueue.Dequeue(out clientId))
         {
-            if (!ClientContext.ClientContexts.ContainsKey(connectionIndex))
+            if (!ClientContext.ClientContexts.ContainsKey(clientId))
             {
                 /* This connection doesnt have a context... new player! */
 
@@ -36,17 +36,19 @@ public class PrefabEntityLibrary : MonoBehaviour
                 var entity = em.Instantiate(entityPrefab);
                 
                 /* Network component stores the connection index on the entity. */
-                var networkComponent = new NetworkComponent() {connectionIdx = connectionIndex};
-                em.AddComponentData(entity, networkComponent);
+              //  var networkComponent = new NetworkComponent() {clientId = clientId};
+                //em.AddComponentData(entity, networkComponent);
 
                 Translation translation = em.GetComponentData<Translation>(entity);
-                translation.Value = new float3(0.0f,0.0f,0.0f);
+                translation.Value = new float3(0.0f,-0.5f,0.0f);
                 
                 ClientContext ctx = new ClientContext();
-                ctx.connectionIndex = connectionIndex;
+                ctx.clientId = clientId;
                 ctx.playerEntity = entity;
             
-                ClientContext.ClientContexts.Add(connectionIndex, ctx);
+                ClientContext.ClientContexts.Add(clientId, ctx);
+                
+                NetworkState.playerEntityCache.Add(clientId, entity);
             }
         }
     }

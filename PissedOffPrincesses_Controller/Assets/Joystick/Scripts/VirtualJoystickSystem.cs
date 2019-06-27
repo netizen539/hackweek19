@@ -1,10 +1,13 @@
-﻿using Unity.Entities;
+﻿using System;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Tiny.Core;
 using Unity.Tiny.Core2D;
 using Unity.Tiny.Input;
-using Unity.Tiny.UILayout;
-
+using UnityEngine;
+using KeyCode = Unity.Tiny.Input.KeyCode;
+using RectTransform = Unity.Tiny.UILayout.RectTransform;
+using Touch = Unity.Tiny.Input.Touch;
 #if !UNITY_WEBGL
 using InputSystem = Unity.Tiny.GLFW.GLFWInputSystem;
 #else
@@ -24,6 +27,33 @@ namespace Joystick
         {
             ServerSystem.ConnectToServer(127,0,0,1, 9002);
         }
+
+        private float2 accumulatedMove;
+        private float updateRateMs = 0.1f;
+        private double lastUpdateMs = 0.0f;
+        private float deadZone = 0.0f;
+
+        public void SendJoystickMoveRateLimited(float2 nextMove)
+        {
+
+            double currentTimeMs = World.TinyEnvironment().frameTime;
+
+            accumulatedMove.x += nextMove.x;
+            accumulatedMove.y += nextMove.y;
+
+            accumulatedMove.x = (float)math.clamp(accumulatedMove.x, -1.0, 1.0);
+            accumulatedMove.y = (float)math.clamp(accumulatedMove.y, -1.0, 1.0);
+
+            if (currentTimeMs > (lastUpdateMs + updateRateMs))
+            {
+               // if (accumulatedMove.x < deadZone && accumulatedMove.y < deadZone)
+                    ServerSystem.SendJoystickToServer(accumulatedMove.x, accumulatedMove.y);
+               lastUpdateMs = currentTimeMs;
+               accumulatedMove.x = 0;
+               accumulatedMove.y = 0;
+            }
+        }
+        
         
         protected override void OnUpdate()
         {
@@ -99,7 +129,6 @@ namespace Joystick
                         magnitudeRatio = 1f;
                         //ServerSystem.ConnectToServer(127,0,0,1, 9002);
                         //#if UNITY_WEBGL
-                            ServerSystem.SendJoystickToServer(0.3f,0.2f);
                         //#endif
                     }
                     if (input.GetKey(KeyCode.A) || input.GetKey(KeyCode.LeftArrow))
@@ -129,6 +158,9 @@ namespace Joystick
                     }
 
                     joystick.Direction = joystickDirection;
+                    if (math.abs(joystickDirection.x) > deadZone || math.abs(joystickDirection.y) > deadZone)
+                        SendJoystickMoveRateLimited(joystickDirection);
+
                 }
 
                 // Update the position of the stick in the UI

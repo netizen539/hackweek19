@@ -7,6 +7,6 @@ public struct NetworkComponent : IComponentData
 {
     /* The network component contains all of the information
      need to communicate with owner of this entity. */
-    public int connectionIdx;
+    //public string clientId;
     
 }

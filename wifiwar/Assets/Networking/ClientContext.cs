@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ClientContext
 {
-    public static Dictionary<int, ClientContext> ClientContexts = new Dictionary<int, ClientContext>();
+    public static Dictionary<string, ClientContext> ClientContexts = new Dictionary<string, ClientContext>();
     
-    public int connectionIndex;
+    public string clientId;
     public Entity playerEntity;
     
 }

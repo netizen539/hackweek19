@@ -64,7 +64,7 @@ namespace ClientMessages
             var readerCtx = default(DataStreamReader.Context);
             uint number = stream.ReadUInt(ref readerCtx);
             Debug.Log("SERVER: A client says hello.");
-            PrefabEntityLibrary.PlayerSpawnQueue.Enqueue(connectionIndex);
+//            PrefabEntityLibrary.PlayerSpawnQueue.Enqueue(connectionIndex);
         }
     }
 

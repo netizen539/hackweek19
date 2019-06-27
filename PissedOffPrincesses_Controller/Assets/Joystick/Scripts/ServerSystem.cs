@@ -17,6 +17,12 @@ public class ServerSystem
 
     [DllImport("__Internal")]
     private static extern void JSSendJoystickToServer(float x, double y);
+
+    [DllImport("__Internal")]
+    private static extern void JSSendFireToServer();
+
+    [DllImport("__Internal")]
+    private static extern void JSSendShieldToServer();
     
     public static void ConnectToServer(int s1, int s2, int s3, int s4, int port)
     {
@@ -26,6 +32,16 @@ public class ServerSystem
     public static void SendJoystickToServer(float x, float y) 
     { 
         JSSendJoystickToServer(x, y);
+    }
+
+    public static void SendFireToSever()
+    {
+        JSSendFireToServer();
+    }
+
+    public static void SendShieldToSerger()
+    {
+        JSSendShieldToServer();
     }
     
 }
