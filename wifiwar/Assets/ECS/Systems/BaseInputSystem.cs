@@ -80,8 +80,9 @@ public abstract class BaseInputSystem : JobComponentSystem
 
         bool shieldAction = TryGetShield();
 		bool fireAction = Fire();
+        bool fireActionP2 = Fire2();
 
-		if (shieldAction)
+        if (shieldAction)
 		{
 			var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
 			using (var shields = shieldQuery.ToEntityArray(Allocator.TempJob))
@@ -95,13 +96,21 @@ public abstract class BaseInputSystem : JobComponentSystem
 
 		if (fireAction)
 		{
-			var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
+			var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent), typeof(Player1_tag));
             using (var players = playerQuery.ToEntityArray(Allocator.TempJob))
                 foreach (var e in players)
                     EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
 		}
-
-		if (Respawn())
+#if UNITY_EDITOR
+        if (fireActionP2)
+        {
+            var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent), typeof(Player2_tag));
+            using (var players = playerQuery.ToEntityArray(Allocator.TempJob))
+                foreach (var e in players)
+                    EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
+        }
+#endif
+        if (Respawn())
 		{
 			var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent));
 			using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
@@ -120,6 +129,8 @@ public abstract class BaseInputSystem : JobComponentSystem
     }
 #if UNITY_EDITOR
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis, out float2 player2DirectionAxis);
+    protected abstract bool TryGetShield2();
+    protected abstract bool Fire2();
 #else
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
 #endif
