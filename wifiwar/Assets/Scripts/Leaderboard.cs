@@ -145,5 +145,15 @@ public class Leaderboard : MonoBehaviour
             _runningLeader = id;
             _runningScore = score;
         }
+
+        if (scoreChanged != null)
+            scoreChanged();
+    }
+
+    public void RemoveRunningLeader()
+    {
+        _runningLeader = null;
+        if (scoreChanged != null)
+            scoreChanged();
     }
 }
