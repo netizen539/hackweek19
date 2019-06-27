@@ -108,7 +108,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 else if(powerUpComponent.isDeadly)
                 {
                     CommandBuffer.AddComponent<DestroyTag>(triggerEntity, new DestroyTag());
-                    CommandBuffer.AddComponent<HitByDeadlyComponent>(dynamicEntity, new HitByDeadlyComponent());
+                    CommandBuffer.AddComponent<HitByDeadlyComponent>(dynamicEntity, new HitByDeadlyComponent { DeadlyEntity = triggerEntity });
                 }
                 else if (powerUpComponent.enabled)
                 {
