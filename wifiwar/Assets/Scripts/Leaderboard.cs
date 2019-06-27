@@ -12,7 +12,7 @@ public class Leaderboard : MonoBehaviour
 
     public event ScoreChangeDelegate scoreChanged;
 
-    void Start()
+    void Awake()
     {
         Current = this;
     }
@@ -36,6 +36,8 @@ public class Leaderboard : MonoBehaviour
 
     public void AddScore(string name, int kills)
     {
+        if (kills <= 0)
+            return;
         for (int i = 0; i < _leaders.Count; ++i)
             if (_leaders[i].name == name)
             {

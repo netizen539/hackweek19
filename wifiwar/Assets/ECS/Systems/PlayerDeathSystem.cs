@@ -7,54 +7,35 @@ using Unity.Transforms;
 using UnityEngine;
 using static Unity.Mathematics.math;
 
-public class PlayerDeathSystem : JobComponentSystem
+public class PlayerDeathSystem : ComponentSystem
 {
-	EntityCommandBufferSystem m_Barrier;
-
-	protected override void OnCreate()
+	protected override void OnUpdate()
 	{
-		m_Barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-	}
+		var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent), typeof(PlayerComponent));
 
-	struct PrintKillResults : IJobForEachWithEntity<HitByDeadlyComponent, PlayerComponent>
-	{
-		public void Execute(Entity entity, int index, [ReadOnly]ref HitByDeadlyComponent hitByDeadlyComponent, [ReadOnly]ref PlayerComponent playerComponent)
-		{
-			Entity attackingPlayer = hitByDeadlyComponent.DeadlyEntity;
-			Entity deadPlayer = entity;
+		using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
+			foreach (var deadPlayer in deadPlayers)
+			{
+				HitByDeadlyComponent hitByDeadlyComponent =
+					EntityManager.GetComponentData<HitByDeadlyComponent>(deadPlayer);
+				Entity deadlyEntity = hitByDeadlyComponent.DeadlyEntity;
+				Entity attackingPlayer;
+				if (EntityManager.HasComponent<ProjectileComponent>(deadlyEntity))
+				{
+					var projectile = EntityManager.GetComponentData<ProjectileComponent>(deadlyEntity);
+					attackingPlayer = projectile.Player;
 
-			Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
-		}
-	}
+					var attackerKills = EntityManager.GetComponentData<PlayerComponent>(attackingPlayer);
+					attackerKills.kills++;
+					EntityManager.SetComponentData(attackingPlayer, attackerKills);
+				}
+				else
+					attackingPlayer = deadlyEntity;
+				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
+				EntityManager.AddComponentData(deadPlayer, new DestroyTag());
 
-	//[BurstCompile]
-	struct MarkPlayerForDeath : IJobForEachWithEntity<HitByDeadlyComponent, PlayerComponent>
-	{
-		public EntityCommandBuffer.Concurrent CommandBuffer;
-
-		public void Execute(Entity entity, int index, [ReadOnly]ref HitByDeadlyComponent hitByDeadlyComponent, [ReadOnly]ref PlayerComponent playerComponent)
-		{
-			CommandBuffer.AddComponent(index, entity, new DestroyTag());
-		}
-	}
-
-	protected override JobHandle OnUpdate(JobHandle inputDeps)
-	{
-		var commandBuffer = m_Barrier.CreateCommandBuffer().ToConcurrent();
-
-		var printResultsJob = new PrintKillResults().Schedule(this, inputDeps);
-
-		var markPlayerForDeathJob = new MarkPlayerForDeath
-		{
-			CommandBuffer = commandBuffer,
-
-		}.Schedule(this, printResultsJob);
-
-
-		m_Barrier.AddJobHandleForProducer(printResultsJob);
-		//printResultsJob.Complete();
-		m_Barrier.AddJobHandleForProducer(markPlayerForDeathJob);
-
-		return markPlayerForDeathJob;
+				var deadKills = EntityManager.GetComponentData<PlayerComponent>(deadPlayer);
+				Leaderboard.Current.AddScore(deadPlayer.ToString(), deadKills.kills);
+			}
 	}
 }

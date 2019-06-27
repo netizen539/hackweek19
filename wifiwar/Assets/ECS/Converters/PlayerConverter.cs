@@ -21,8 +21,6 @@ public class PlayerConverter : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData(entity, new PlayerComponent());
-        
-        
+        dstManager.AddComponentData(entity, new PlayerComponent { kills = 0 });
     }
 }
