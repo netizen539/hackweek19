@@ -131,7 +131,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                         CommandBuffer.AddComponent<GotSword>(dynamicEntity, new GotSword());
                     else if(powerUpComponent.isGunPowerUp)
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
-                    else if (powerUpComponent.isSpreadshot)
+                    else if (powerUpComponent.isSpeed)
                         CommandBuffer.AddComponent<PowerUpSpeedTag>(dynamicEntity, new PowerUpSpeedTag());
                     else if (powerUpComponent.isSpreadshot)
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
