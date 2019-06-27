@@ -90,16 +90,14 @@ public abstract class BaseInputSystem : JobComponentSystem
 
 		if (Respawn())
 		{
-			var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent), typeof(DestroyTag));
+			var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent));
 			using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
 				foreach (var player in deadPlayers)
 				{
 					if (!EntityManager.HasComponent<PlayerComponent>(player))
 					{
 						EntityManager.RemoveComponent<HitByDeadlyComponent>(player);
-						EntityManager.RemoveComponent<DestroyTag>(player);
 						EntityManager.AddComponentData(player, new PlayerComponent { kills = 0 });
-						//EntityManager.SetComponentData(player, new Translation { Value = float3.zero });
 						break;
 					}
 				}
