@@ -9,7 +9,7 @@ using Unity.Physics;
 
 public class RotationSpeedSystem : ComponentSystem
 {
-    protected override void OnUpdate()
+    protected override void OnStartRunning()
     {
 #if UNITY_EDITOR
         int i = 0;
@@ -22,5 +22,9 @@ public class RotationSpeedSystem : ComponentSystem
             i++;
         });
 #endif
+
+    }
+    protected override void OnUpdate()
+    {
     }
 }
