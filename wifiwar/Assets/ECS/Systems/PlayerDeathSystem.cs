@@ -3,9 +3,11 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using static Unity.Mathematics.math;
+using float3 = Unity.Mathematics.float3;
 
 public class PlayerDeathSystem : ComponentSystem
 {
@@ -35,7 +37,7 @@ public class PlayerDeathSystem : ComponentSystem
 
 				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
 				var deadKills = EntityManager.GetComponentData<PlayerComponent>(deadPlayer);
-				Leaderboard.Current.AddScore(deadPlayer.ToString(), deadKills.kills);
+				Leaderboard.Current.AddScore((ulong)deadPlayer.Index, deadKills.kills);
 			}
 
 			// actually kill players after full leaderboard update, in case player kills someone and dies at the same time
@@ -46,6 +48,9 @@ public class PlayerDeathSystem : ComponentSystem
 				playerTranslation.Value.x = 0;
 				playerTranslation.Value.z = 0;
 				EntityManager.SetComponentData(deadPlayer, playerTranslation);
+				var movement = EntityManager.GetComponentData<MovementComponent>(deadPlayer);
+				movement.playerDirectionAxis = new float2();
+				EntityManager.SetComponentData(deadPlayer, movement);
 			}
 		}
 	}

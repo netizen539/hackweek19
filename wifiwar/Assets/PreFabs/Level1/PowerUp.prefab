@@ -226,6 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b88de0759ef52347bba45221f3ec2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSwordPowerUp: 1
+  isSwordPowerUp: 0
   isGunPowerUp: 0
+  isSpreadShot: 0
+  isSpeed: 1
   isDeadly: 0

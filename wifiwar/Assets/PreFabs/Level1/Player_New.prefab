@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5474847707814058064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618183398523793147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4725f9a6494c1d64eae9755e2decc000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6586077463635951448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,18 +78,6 @@ MonoBehaviour:
     m_CustomFlags:
       m_Override: 0
       m_Value: 0000000000000000
---- !u!114 &5474847707814058064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618183398523793147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4725f9a6494c1d64eae9755e2decc000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6586077463618524386
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6586077463618524312}
   - component: {fileID: 6586077463618524315}
   - component: {fileID: 6586077463618524314}
+  - component: {fileID: 5267947490972589932}
   - component: {fileID: -9000083318696368654}
   m_Layer: 0
   m_Name: Player_New
@@ -109,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6586077463618524386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 618183398523793120}
@@ -269,6 +270,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee040b636011149998c7097cb03c52a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5267947490972589932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6586077463618524386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6f7a4021f9d924c9fe6dc6b47d9e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  none: 0
+  spreadshot: 0
+  speed: 0
 --- !u!114 &-9000083318696368654
 MonoBehaviour:
   m_ObjectHideFlags: 0

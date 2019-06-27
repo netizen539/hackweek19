@@ -7,6 +7,8 @@ public class Leaderboard : MonoBehaviour
     public static Leaderboard Current { get; set; }
     public int maxLeaders = 5;
     private List<Leader> _leaders = new List<Leader>();
+    private ulong? _runningLeader;
+    private uint _runningScore;
 
     public delegate void ScoreChangeDelegate();
 
@@ -19,12 +21,12 @@ public class Leaderboard : MonoBehaviour
 
     public struct Leader
     {
-        public string name;
-        public int kills;
+        public ulong playerId;
+        public uint kills;
 
-        public Leader(string name, int kills)
+        public Leader(ulong id, uint kills)
         {
-            this.name = name;
+            this.playerId = id;
             this.kills = kills;
         }
     }
@@ -34,12 +36,48 @@ public class Leaderboard : MonoBehaviour
         get { return _leaders; }
     }
 
-    public void AddScore(string name, int kills)
+    public ulong? RunningLeader
+    {
+        get
+        {
+            ulong historicalId, historicalScore, runningId, runningScore;
+            if (_runningLeader.HasValue)
+            {
+                runningId = _runningLeader.Value;
+                runningScore = _runningScore;
+            }
+            else
+            {
+                runningId = 0;
+                runningScore = 0;
+            }
+
+            if (_leaders.Count > 0)
+            {
+                historicalId = _leaders[0].playerId;
+                historicalScore = _leaders[0].kills;
+            }
+            else
+            {
+                historicalId = 0;
+                historicalScore = 0;
+            }
+
+            ulong? ret = null;
+            if (runningScore > 0)
+                ret = runningId;
+            if (historicalScore > runningScore)
+                ret = historicalId;
+            return ret;
+        }
+    }
+
+    public void AddScore(ulong id, uint kills)
     {
         if (kills <= 0)
             return;
         for (int i = 0; i < _leaders.Count; ++i)
-            if (_leaders[i].name == name)
+            if (_leaders[i].playerId == id)
             {
                 if (_leaders[i].kills < kills)
                 {
@@ -50,13 +88,13 @@ public class Leaderboard : MonoBehaviour
                 return;
             }
         
-        NewScore(name, kills);
+        NewScore(id, kills);
     }
 
-    public void RemovePlayer(string name)
+    public void RemovePlayer(ulong id)
     {
         for (int i = 0; i < _leaders.Count; ++i)
-            if (_leaders[i].name == name)
+            if (_leaders[i].playerId == id)
             {
                 _leaders.RemoveAt(i);
                 if (scoreChanged != null)
@@ -65,7 +103,7 @@ public class Leaderboard : MonoBehaviour
             }
     }
     
-    private void NewScore(string name, int kills)
+    private void NewScore(ulong id, uint kills)
     {
         int i;
         for (i = _leaders.Count; i > 0; --i)
@@ -79,15 +117,42 @@ public class Leaderboard : MonoBehaviour
             if (_leaders.Count == maxLeaders)
                 return;
 
-            _leaders.Add(new Leader(name, kills));
+            _leaders.Add(new Leader(id, kills));
         }
         else
         {
-            _leaders.Insert(i, new Leader(name, kills));
+            _leaders.Insert(i, new Leader(id, kills));
             if (_leaders.Count > maxLeaders)
                 _leaders.RemoveAt(maxLeaders);
         }
 
+        if (scoreChanged != null)
+            scoreChanged();
+    }
+
+    public void UpdateRunningLeader(ulong id, uint score)
+    {
+        if (_runningLeader.HasValue)
+        {
+            if (_runningScore < score)
+            {
+                _runningLeader = id;
+                _runningScore = score;
+            }
+        }
+        else if (score > 0)
+        {
+            _runningLeader = id;
+            _runningScore = score;
+        }
+
+        if (scoreChanged != null)
+            scoreChanged();
+    }
+
+    public void RemoveRunningLeader()
+    {
+        _runningLeader = null;
         if (scoreChanged != null)
             scoreChanged();
     }

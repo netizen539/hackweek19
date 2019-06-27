@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5030519984186198054}
   - component: {fileID: 5030519984186198061}
   - component: {fileID: 306633123}
+  - component: {fileID: 832626523}
   m_Layer: 0
   m_Name: CapsuleBulletTemplate
   m_TagString: Untagged
@@ -229,4 +230,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSwordPowerUp: 0
   isGunPowerUp: 0
+  isSpreadShot: 0
+  isSpeed: 0
   isDeadly: 1
+--- !u!114 &832626523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030519984186198053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a231cf2f69fe54b9e7e6494989fb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  none: 0
+  spreadshot: 0
+  speed: 0
