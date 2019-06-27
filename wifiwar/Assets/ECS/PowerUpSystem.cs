@@ -56,8 +56,8 @@ public class PowerUpSystemBehavior : ComponentSystem
 
         Entities.ForEach((Entity ent, ref PlayerHit playerHit, ref PowerUpSystemComponent powerup) =>
         {
-        //    commandBuffer.RemoveComponent<PlayerHit>(ent);
-              powerup.currentCharge = 0;
+            commandBuffer.RemoveComponent<PlayerHit>(ent);
+            powerup.currentCharge = 0;
         });
 
 
