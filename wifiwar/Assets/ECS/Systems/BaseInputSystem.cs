@@ -80,11 +80,10 @@ public abstract class BaseInputSystem : JobComponentSystem
 
         bool shieldAction = TryGetShield();
 		bool fireAction = Fire();
-        bool fireActionP2 = Fire2();
 
         if (shieldAction)
 		{
-			var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
+			var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent), typeof(Player1_tag));
 			using (var shields = shieldQuery.ToEntityArray(Allocator.TempJob))
 				foreach (var sh in shields)
 				{
@@ -102,6 +101,21 @@ public abstract class BaseInputSystem : JobComponentSystem
                     EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
 		}
 #if UNITY_EDITOR
+        bool fireActionP2 = Fire2();
+        bool shieldAction2 = TryGetShield2();
+
+        if (shieldAction2)
+        {
+            var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent), typeof(Player2_tag));
+            using (var shields = shieldQuery.ToEntityArray(Allocator.TempJob))
+                foreach (var sh in shields)
+                {
+                    var shield = EntityManager.GetComponentData<ShieldComponent>(sh);
+                    shield.shieldOn = !shield.shieldOn;
+                    EntityManager.SetComponentData(sh, shield);
+                }
+        }
+
         if (fireActionP2)
         {
             var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent), typeof(Player2_tag));

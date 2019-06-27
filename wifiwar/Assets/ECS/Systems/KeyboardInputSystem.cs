@@ -50,7 +50,7 @@ public class KeyboardInputSystem : BaseInputSystem
     protected override bool TryGetShield2()
     {
 
-        bool shieldActive = Input.GetKeyDown(KeyCode.P);
+        bool shieldActive = Input.GetKeyDown(KeyCode.V);
 
         return shieldActive;
     }
