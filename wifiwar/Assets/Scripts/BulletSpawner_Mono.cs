@@ -4,6 +4,8 @@ using Unity.Transforms;
 
 public class BulletSpawner_Mono : MonoBehaviour
 {
+	//only used in seprate example in Liz_bulletTest
+	/*
 	public GameObject BulletTemplate;
 	public Transform PlayerTransform;
 	public int Speed = 5;
@@ -46,4 +48,5 @@ public class BulletSpawner_Mono : MonoBehaviour
 		Vector3 bulletRotation = new Vector3(0, euler.y + 90, 90);
 		return Quaternion.Euler(bulletRotation);
 	}
+	*/
 }
