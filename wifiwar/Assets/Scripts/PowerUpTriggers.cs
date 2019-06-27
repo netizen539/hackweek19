@@ -93,11 +93,6 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 bool isBodyADynamic = PhysicsVelocityGroup.Exists(entityA);
                 bool isBodyBDynamic = PhysicsVelocityGroup.Exists(entityB);
 
-                // Ignoring overlapping static bodies
-                //if ((isBodyATrigger && !isBodyBDynamic) ||
-                //    (isBodyBTrigger && !isBodyADynamic))
-                //    return;
-
                 var triggerEntity = isBodyATrigger ? entityA : entityB; 
                 var dynamicEntity = isBodyATrigger ? entityB : entityA;
 
