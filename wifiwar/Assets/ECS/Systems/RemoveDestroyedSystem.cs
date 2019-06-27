@@ -22,9 +22,7 @@ public class RemoveDestroyedSystem : JobComponentSystem
 
 		public void Execute(Entity entity, int index, [ReadOnly] ref DestroyTag c0, ref Translation translation)
 		{
-			//CommandBuffer.DestroyEntity(index, entity);
-			CommandBuffer.RemoveComponent<PlayerComponent>(index, entity);
-			translation.Value = new float3(0, translation.Value.y, 0);
+			CommandBuffer.DestroyEntity(index, entity);
 		}
 	}
 
