@@ -18,6 +18,7 @@ public struct PowerUpSystemComponent : IComponentData
 [Serializable]
 public struct GotSword : IComponentData{}
 public struct GotGun : IComponentData { }
+public struct WallTag : IComponentData { }
 public struct PlayerHit : IComponentData
 {
     int wtf;

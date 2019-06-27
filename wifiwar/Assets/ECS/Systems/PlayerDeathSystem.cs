@@ -14,6 +14,7 @@ public class PlayerDeathSystem : ComponentSystem
 		var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent), typeof(PlayerComponent));
 
 		using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
+		{
 			foreach (var deadPlayer in deadPlayers)
 			{
 				HitByDeadlyComponent hitByDeadlyComponent =
@@ -31,11 +32,21 @@ public class PlayerDeathSystem : ComponentSystem
 				}
 				else
 					attackingPlayer = deadlyEntity;
-				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
-				EntityManager.AddComponentData(deadPlayer, new DestroyTag());
 
+				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
 				var deadKills = EntityManager.GetComponentData<PlayerComponent>(deadPlayer);
 				Leaderboard.Current.AddScore(deadPlayer.ToString(), deadKills.kills);
 			}
+
+			// actually kill players after full leaderboard update, in case player kills someone and dies at the same time
+			foreach (var deadPlayer in deadPlayers)
+			{
+				EntityManager.RemoveComponent<PlayerComponent>(deadPlayer);
+				var playerTranslation = EntityManager.GetComponentData<Translation>(deadPlayer);
+				playerTranslation.Value.x = 0;
+				playerTranslation.Value.z = 0;
+				EntityManager.SetComponentData(deadPlayer, playerTranslation);
+			}
+		}
 	}
 }
