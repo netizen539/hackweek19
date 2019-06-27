@@ -40,25 +40,24 @@ public abstract class BaseInputSystem : JobComponentSystem
 
 		bool shieldAction = TryGetShield();
 		bool fireAction = Fire();
-		if (shieldAction || fireAction)
+		if (shieldAction)
 		{
-			var query = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
-			using (var players = query.ToEntityArray(Allocator.TempJob))
-				foreach (var e in players)
+			var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
+			using (var shields = shieldQuery.ToEntityArray(Allocator.TempJob))
+				foreach (var sh in shields)
 				{
-					if (shieldAction)
-					{
-						var shield = EntityManager.GetComponentData<ShieldComponent>(e);
-						shield.shieldOn = !shield.shieldOn;
-						EntityManager.SetComponentData(e, shield);
-					}
-
-					if (fireAction)
-					{
-						// TODO
-						EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
-					}
+					var shield = EntityManager.GetComponentData<ShieldComponent>(sh);
+					shield.shieldOn = !shield.shieldOn;
+					EntityManager.SetComponentData(sh, shield);
 				}
+		}
+
+		if (fireAction)
+		{
+			var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
+			using (var players = playerQuery.ToEntityArray(Allocator.TempJob))
+				foreach (var e in players)
+					EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
 		}
 
 		return job.Schedule(this, inputDependencies);

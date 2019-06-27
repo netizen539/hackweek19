@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using Unity.Entities;
+﻿using Unity.Entities;
 public struct ProjectileComponent : IComponentData
 {
 	public int Speed;
-	public Vector3 forward;
-	public float lifeTime;
+	public float LifeTime;
+	public Entity Player;
 }
