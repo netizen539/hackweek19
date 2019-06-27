@@ -40,4 +40,9 @@ public class KeyboardInputSystem : BaseInputSystem
     {
         return Input.GetKeyDown(KeyCode.Return);
     }
+
+    protected override bool Respawn()
+    {
+        return Input.GetKeyDown(KeyCode.R);
+    }
 }
