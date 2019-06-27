@@ -8,6 +8,13 @@ using System;
 using Unity.Rendering;
 using Unity.Transforms;
 
+public enum PowerUpTypes
+{
+    None,
+    SpreadShot,
+    Speed
+}
+
 [Serializable]
 public struct PowerUpSystemComponent : IComponentData
 {
@@ -17,6 +24,11 @@ public struct PowerUpSystemComponent : IComponentData
 
 [Serializable]
 public struct GotSword : IComponentData{}
+[Serializable]
+public struct NewPowerUpComponent : IComponentData
+{
+    public PowerUpTypes powerType;
+}
 public struct GotGun : IComponentData { }
 public struct PowerUpSpeedTag : IComponentData { }
 public struct WallTag : IComponentData { }

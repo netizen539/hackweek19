@@ -75,6 +75,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
         struct PowerUpTriggerJob : ITriggerEventsJob
         {
             public ComponentDataFromEntity<PowerUpTriggerComponent> PowerUpTriggerGroup;
+            public ComponentDataFromEntity<NewPowerUpComponent> NewPoweUpGroup;
             public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
             [ReadOnly]
             public ComponentDataFromEntity<WallTag> WallGroup;
@@ -82,6 +83,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
             public ComponentDataFromEntity<DestroyTag> DestroyGroup;
             [ReadOnly]
             public ComponentDataFromEntity<HitByDeadlyComponent> HitByDeadlyGroup;
+            
             public EntityCommandBuffer CommandBuffer;
 
             public void Execute(TriggerEvent triggerEvent)
@@ -132,7 +134,12 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                     else if(powerUpComponent.isGunPowerUp)
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
                     else if (powerUpComponent.isSpeed)
-                        CommandBuffer.AddComponent<PowerUpSpeedTag>(dynamicEntity, new PowerUpSpeedTag());
+                    {
+                        var newPowerUpComponent = NewPoweUpGroup[dynamicEntity];
+                        newPowerUpComponent.powerType = PowerUpTypes.Speed;
+                        NewPoweUpGroup[dynamicEntity] = newPowerUpComponent;
+                    }
+                        
                     else if (powerUpComponent.isSpreadshot)
                         CommandBuffer.AddComponent<GotGun>(dynamicEntity, new GotGun());
 
@@ -152,6 +159,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 WallGroup = GetComponentDataFromEntity<WallTag>(true),
                 DestroyGroup = GetComponentDataFromEntity<DestroyTag>(true),
                 HitByDeadlyGroup = GetComponentDataFromEntity<HitByDeadlyComponent>(true),
+                NewPoweUpGroup = GetComponentDataFromEntity<NewPowerUpComponent>(false),
                 CommandBuffer = ecbSystem.CreateCommandBuffer()
             }.Schedule(m_StepPhysicsWorldSystem.Simulation,
                         ref m_BuildPhysicsWorldSystem.PhysicsWorld, inputDeps);
