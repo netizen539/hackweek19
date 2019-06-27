@@ -37,7 +37,7 @@ public class PlayerDeathSystem : ComponentSystem
 
 				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
 				var deadKills = EntityManager.GetComponentData<PlayerComponent>(deadPlayer);
-				Leaderboard.Current.AddScore(deadPlayer.ToString(), deadKills.kills);
+				Leaderboard.Current.AddScore((ulong)deadPlayer.Index, deadKills.kills);
 			}
 
 			// actually kill players after full leaderboard update, in case player kills someone and dies at the same time
