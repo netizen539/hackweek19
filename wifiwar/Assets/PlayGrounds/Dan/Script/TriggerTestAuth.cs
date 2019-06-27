@@ -60,7 +60,6 @@ public class TriggerTestSystem : JobComponentSystem
     struct TriggerGravityFactorJob : ITriggerEventsJob
     {
         public ComponentDataFromEntity<TriggerTestComponent> TriggerTestGroup;
-        //[ReadOnly] public ComponentDataFromEntity<TriggerTestComponent> TriggerTestGroup;
         public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
         public EntityCommandBuffer CommandBuffer;
 
