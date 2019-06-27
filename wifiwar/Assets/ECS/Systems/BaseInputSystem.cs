@@ -50,6 +50,13 @@ public abstract class BaseInputSystem : JobComponentSystem
         }
     }
 
+    // Dummy job, because if all players die, other jobs no longer run and this system does not run
+    struct InputSystemJob : IJobForEach<Player1_tag>
+    {
+	    public void Execute([ReadOnly] ref Player1_tag player)
+	    {}
+    }
+
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
         var job1 = new MovementInputSystemJobPlayer1();
@@ -125,7 +132,8 @@ public abstract class BaseInputSystem : JobComponentSystem
 				}
 		}
 
-        return job2.Schedule(this, job1.Schedule(this, inputDependencies));
+		var dummy = new InputSystemJob();
+        return dummy.Schedule(this,job2.Schedule(this, job1.Schedule(this, inputDependencies)));
     }
 #if UNITY_EDITOR
     protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis, out float2 player2DirectionAxis);
