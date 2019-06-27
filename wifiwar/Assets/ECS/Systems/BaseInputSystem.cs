@@ -11,13 +11,13 @@ using float3 = Unity.Mathematics.float3;
 public abstract class BaseInputSystem : JobComponentSystem
 {
     [BurstCompile]
-    struct MovementInputSystemJobPlayer1 : IJobForEach<Player1_tag, MovementComponent>
+    struct MovementInputSystemJobPlayer1 : IJobForEach<PlayerComponent, Player1_tag, MovementComponent>
     {
         public float2 directionAxisPlayer;
 
         public float speed;
 
-        public void Execute([ReadOnly] ref Player1_tag player, ref MovementComponent movement)
+        public void Execute([ReadOnly] ref PlayerComponent p, [ReadOnly] ref Player1_tag player, ref MovementComponent movement)
         {
             movement.speed = speed;
 
@@ -31,13 +31,13 @@ public abstract class BaseInputSystem : JobComponentSystem
     }
 
     [BurstCompile]
-    struct MovementInputSystemJobPlayer2 : IJobForEach<Player2_tag, MovementComponent>
+    struct MovementInputSystemJobPlayer2 : IJobForEach<PlayerComponent, Player2_tag, MovementComponent>
     {
         public float2 directionAxisPlayer;
 
         public float speed;
 
-        public void Execute([ReadOnly] ref Player2_tag player, ref MovementComponent movement)
+        public void Execute([ReadOnly] ref PlayerComponent p, [ReadOnly] ref Player2_tag player, ref MovementComponent movement)
         {
             movement.speed = speed;
 
