@@ -40,4 +40,24 @@ public class KeyboardInputSystem : BaseInputSystem
     {
         return Input.GetKeyDown(KeyCode.Return);
     }
+
+    protected override bool Respawn()
+    {
+        return Input.GetKeyDown(KeyCode.R);
+    }
+
+#if UNITY_EDITOR
+    protected override bool TryGetShield2()
+    {
+
+        bool shieldActive = Input.GetKeyDown(KeyCode.V);
+
+        return shieldActive;
+    }
+
+    protected override bool Fire2()
+    {
+        return Input.GetKeyDown(KeyCode.LeftControl);
+    }
+#endif
 }
