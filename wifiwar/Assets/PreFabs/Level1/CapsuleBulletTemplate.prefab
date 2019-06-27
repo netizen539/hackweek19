@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5030519984186198055}
   - component: {fileID: 5030519984186198054}
   - component: {fileID: 5030519984186198061}
-  - component: {fileID: 5030519984186198049}
+  - component: {fileID: 306633123}
   m_Layer: 0
   m_Name: CapsuleBulletTemplate
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5030519984186198053}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -20.68, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
@@ -215,7 +215,7 @@ MonoBehaviour:
     x: 0.4
     y: 0.4
     z: 0.4
---- !u!114 &5030519984186198049
+--- !u!114 &306633123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,7 +224,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5030519984186198053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c6f1947dffab24b97cd8d0d89b5c22, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b88de0759ef52347bba45221f3ec2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 16
+  isSwordPowerUp: 0
+  isGunPowerUp: 0
+  isDeadly: 1
