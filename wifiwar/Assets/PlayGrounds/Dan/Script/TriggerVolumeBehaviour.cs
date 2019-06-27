@@ -269,8 +269,8 @@ unsafe public class TriggerVolumeSystem : JobComponentSystem
 							CommandBuffer.AddComponent<ForceFieldOverlappingTriggerVolume>(overlappingEntity, new ForceFieldOverlappingTriggerVolume());
 							break;
 						case TriggerVolumeType.Deadly:
-							CommandBuffer.AddComponent<HitByDeadlyTag>(overlappingEntity, new HitByDeadlyTag());
-							CommandBuffer.AddComponent<HitByDeadlyTag>(entities.VolumeEntity, new HitByDeadlyTag());
+							CommandBuffer.AddComponent<HitByDeadlyComponent>(overlappingEntity, new HitByDeadlyComponent { DeadlyEntity = entities.VolumeEntity });
+							CommandBuffer.AddComponent<DestroyTag>(entities.VolumeEntity, new DestroyTag());
 							break;
 						case TriggerVolumeType.None:
 						default:
