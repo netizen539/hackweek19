@@ -44,7 +44,7 @@ public class SpawnProjectileSystem : ComponentSystem
 			Quaternion playerRotation = playerRotationComponent.Value;
 			Matrix4x4 m = Matrix4x4.Rotate(playerRotation);
 			Vector3 bulletDirection = m.MultiplyPoint3x4(Vector3.forward).normalized;
-			Vector3 bulletTranslation = new Vector3(playerTranslation.Value.x, playerTranslation.Value.y, playerTranslation.Value.z);
+			Vector3 bulletTranslation = new Vector3(playerTranslation.Value.x, playerTranslation.Value.y + 0.4f, playerTranslation.Value.z);
 			bulletTranslation += bulletDirection * 0.7f;
 
 			var movementData = new MovementComponent

@@ -67,6 +67,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
         {
             public ComponentDataFromEntity<PowerUpTriggerComponent> PowerUpTriggerGroup;
             public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
+            [ReadOnly]
+            public ComponentDataFromEntity<WallTag> WallGroup;
             public EntityCommandBuffer CommandBuffer;
 
             public void Execute(TriggerEvent triggerEvent)
@@ -85,9 +87,9 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 bool isBodyBDynamic = PhysicsVelocityGroup.Exists(entityB);
 
                 // Ignoring overlapping static bodies
-                if ((isBodyATrigger && !isBodyBDynamic) ||
-                    (isBodyBTrigger && !isBodyADynamic))
-                    return;
+                //if ((isBodyATrigger && !isBodyBDynamic) ||
+                //    (isBodyBTrigger && !isBodyADynamic))
+                //    return;
 
                 var triggerEntity = isBodyATrigger ? entityA : entityB; 
                 var dynamicEntity = isBodyATrigger ? entityB : entityA;
@@ -96,14 +98,17 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 if (!isTriggerPowerUp)
                     return;
 
-
+                bool isWall = WallGroup.Exists(triggerEntity);
                 var powerUpComponent = PowerUpTriggerGroup[triggerEntity];
 
-                if(powerUpComponent.isDeadly)
+                if(powerUpComponent.isDeadly && isWall)
+                {
+                    CommandBuffer.AddComponent<DestroyTag>(triggerEntity, new DestroyTag());
+                }
+                else if(powerUpComponent.isDeadly)
                 {
                     CommandBuffer.AddComponent<DestroyTag>(triggerEntity, new DestroyTag());
                     CommandBuffer.AddComponent<HitByDeadlyComponent>(dynamicEntity, new HitByDeadlyComponent());
-                    
                 }
                 else if (powerUpComponent.enabled)
                 {
@@ -128,6 +133,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
             {
                 PowerUpTriggerGroup = GetComponentDataFromEntity<PowerUpTriggerComponent>(false),
                 PhysicsVelocityGroup = GetComponentDataFromEntity<PhysicsVelocity>(),
+                WallGroup = GetComponentDataFromEntity<WallTag>(true),
                 CommandBuffer = ecbSystem.CreateCommandBuffer()
             }.Schedule(m_StepPhysicsWorldSystem.Simulation,
                         ref m_BuildPhysicsWorldSystem.PhysicsWorld, inputDeps);
