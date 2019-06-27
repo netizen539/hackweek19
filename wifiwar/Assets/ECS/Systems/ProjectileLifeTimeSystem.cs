@@ -22,9 +22,9 @@ public class ProjectileLifeTimeSystem : JobComponentSystem
 
 		public void Execute(Entity entity, int jobIndex, ref ProjectileComponent projectileComponent)
 		{
-			projectileComponent.lifeTime -= deltaTime;
+			projectileComponent.LifeTime -= deltaTime;
 
-			if (projectileComponent.lifeTime < 0.0f)
+			if (projectileComponent.LifeTime < 0.0f)
 			{
 				CommandBuffer.DestroyEntity(jobIndex, entity);
 			}
