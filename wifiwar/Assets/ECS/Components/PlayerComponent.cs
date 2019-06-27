@@ -7,4 +7,5 @@ using Unity.Mathematics;
 public struct PlayerComponent : IComponentData
 {
     public int kills;
+    public bool isPlayer1;
 }

@@ -45,6 +45,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
         StepPhysicsWorld m_StepPhysicsWorldSystem;
         EntityQuery TriggerGroupQuery;
         BeginSimulationEntityCommandBufferSystem ecbSystem;
+        
 
         protected override void OnCreate()
         {
@@ -85,8 +86,13 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                     (isBodyBTrigger && !isBodyADynamic))
                     return;
 
-                var triggerEntity = isBodyATrigger ? entityA : entityB;
+                var triggerEntity = isBodyATrigger ? entityA : entityB; 
                 var dynamicEntity = isBodyATrigger ? entityB : entityA;
+
+                bool isTriggerPowerUp = PowerUpTriggerGroup.Exists(triggerEntity);
+                if (!isTriggerPowerUp)
+                    return;
+
 
                 var powerUpComponent = PowerUpTriggerGroup[triggerEntity];
 
