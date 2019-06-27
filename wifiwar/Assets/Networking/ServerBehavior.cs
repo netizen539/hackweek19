@@ -30,10 +30,6 @@ static class IncomingClientMessageParser
         {
             ClientMessageGoodbye msg = new ClientMessageGoodbye();
             msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
-        } else if (messageID == ClientMessageMove.id)
-        {
-            ClientMessageMove msg = new ClientMessageMove();
-            msg.Recieve(connection, stream, commandBuffer, connectionIndex, driver);
         } else if (messageID == ClientMessageFire.id)
         {
             ClientMessageFire msg = new ClientMessageFire();

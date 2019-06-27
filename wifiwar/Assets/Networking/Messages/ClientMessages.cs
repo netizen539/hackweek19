@@ -93,35 +93,6 @@ namespace ClientMessages
 
     }
 
-    public class ClientMessageMove : ClientMessageBase
-    {
-        public MovementDirection moveDirection;
-        
-         public static uint id
-         {
-             get { return (ushort) MessageIDs.CLIENT_MOVE; }
-         }
- 
-         public override void SendTo(UdpCNetworkDriver driver, NetworkConnection peer)
-         {
-             using (var writer = new DataStreamWriter(4, Allocator.Temp))
-             {
-                 writer.Write(id);
-                 writer.Write((uint)moveDirection);
-                 peer.Send(driver, writer);
-             }
-         }
- 
-         public override void Recieve(NetworkConnection connection, DataStreamReader stream,
-             EntityCommandBuffer.Concurrent commandBuffer, int connectionIndex, UdpCNetworkDriver.Concurrent driver)
-         {
-             var readerCtx = default(DataStreamReader.Context);
-             uint number = stream.ReadUInt(ref readerCtx);
- 
-             Debug.Log("SERVER: A client wants to move.");
-         }
-    }
-    
     public class ClientMessageFire : ClientMessageBase
     {
         public static uint id
