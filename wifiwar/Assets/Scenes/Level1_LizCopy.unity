@@ -779,11 +779,11 @@ GameObject:
   - component: {fileID: 665946408}
   - component: {fileID: 665946407}
   - component: {fileID: 665946406}
-  - component: {fileID: 665946405}
   - component: {fileID: 665946404}
   - component: {fileID: 665946403}
   - component: {fileID: 665946402}
   - component: {fileID: 665946409}
+  - component: {fileID: 665946405}
   m_Layer: 0
   m_Name: CapsuleBulletTemplate
   m_TagString: Untagged
@@ -834,7 +834,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_IsTrigger:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:
@@ -882,22 +882,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee59f437ac435416480b24ebfe284720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
+  Speed: 2
   LifeTime: 10
---- !u!136 &665946405
-CapsuleCollider:
+--- !u!114 &665946405
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665946401}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c6f1947dffab24b97cd8d0d89b5c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 16
 --- !u!23 &665946406
 MeshRenderer:
   m_ObjectHideFlags: 0
