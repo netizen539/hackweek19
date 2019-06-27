@@ -5,6 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using static Unity.Mathematics.math;
+using UnityEngine;
 
 public abstract class BaseInputSystem : JobComponentSystem
 {
@@ -12,34 +13,60 @@ public abstract class BaseInputSystem : JobComponentSystem
 	struct MovementInputSystemJob : IJobForEach<PlayerComponent, MovementComponent>
 	{
 		public float2 directionAxisPlayer;
-		public float speed;
+#if UNITY_EDITOR
+        public float2 directionAxisPlayer2;
+#endif
+
+        public float speed;
 
 		public void Execute([ReadOnly] ref PlayerComponent player, ref MovementComponent movement)
 		{
 			movement.speed = speed;
-			// if not moving, keep direction the same
-			if (speed > 0)
-				movement.playerDirectionAxis = directionAxisPlayer;
-		}
+
+            // if not moving, keep direction the same
+            if (speed > 0)
+            {
+#if UNITY_EDITOR
+                if (player.isPlayer1)
+                    movement.playerDirectionAxis = directionAxisPlayer;
+                else
+                    movement.playerDirectionAxis = directionAxisPlayer2;
+#else
+                    movement.playerDirectionAxis = directionAxisPlayer;
+#endif
+            }
+
+        }
 	}
 
-	protected override JobHandle OnUpdate(JobHandle inputDependencies)
+    protected override JobHandle OnUpdate(JobHandle inputDependencies)
 	{
 		var job = new MovementInputSystemJob();
 
 		float2 directionAxis;
-		if (TryGetMovementDirectionAxis(out directionAxis))
-		{
-			job.directionAxisPlayer = directionAxis;
-			job.speed = MovementSystem.MaxSpeed;
+#if UNITY_EDITOR
+        float2 directionAxis2;
+        if (TryGetMovementDirectionAxis(out directionAxis, out directionAxis2
+#else
+        if (TryGetMovementDirectionAxis(out directionAxis
+#endif
+            ))
+        {
+            job.directionAxisPlayer = directionAxis;
+#if UNITY_EDITOR
+            job.directionAxisPlayer2 = directionAxis2;
+#endif
+            job.speed = MovementSystem.MaxSpeed;
 		}
 		else
 		{
 			job.speed = 0;
 		}
 
+        
 		bool shieldAction = TryGetShield();
 		bool fireAction = Fire();
+
 		if (shieldAction)
 		{
 			var shieldQuery = EntityManager.CreateEntityQuery(typeof(ShieldComponent));
@@ -55,15 +82,18 @@ public abstract class BaseInputSystem : JobComponentSystem
 		if (fireAction)
 		{
 			var playerQuery = EntityManager.CreateEntityQuery(typeof(PlayerComponent));
-			using (var players = playerQuery.ToEntityArray(Allocator.TempJob))
-				foreach (var e in players)
-					EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
+            using (var players = playerQuery.ToEntityArray(Allocator.TempJob))
+                foreach (var e in players)
+                    EntityManager.AddComponentData(e, new ReadyToSpawnBulletComponent());
 		}
 
-		return job.Schedule(this, inputDependencies);
+        return job.Schedule(this, inputDependencies);
 	}
-
-	protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
-	protected abstract bool TryGetShield();
+#if UNITY_EDITOR
+    protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis, out float2 player2DirectionAxis);
+#else
+    protected abstract bool TryGetMovementDirectionAxis(out float2 playerDirectionAxis);
+#endif
+    protected abstract bool TryGetShield();
 	protected abstract bool Fire();
 }
