@@ -5,6 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using static Unity.Mathematics.math;
+using Unity.Physics;
 
 public class MovementSystem : JobComponentSystem
 {
@@ -21,18 +22,20 @@ public class MovementSystem : JobComponentSystem
     }
     
     [BurstCompile]
-    struct MovementSystemJob : IJobForEach<Translation, Rotation, MovementComponent>
+    struct MovementSystemJob : IJobForEach<Translation, Rotation, MovementComponent, PhysicsVelocity>
     {
         public float deltaTime;
         
         
         
-        public void Execute(ref Translation translation, [ReadOnly] ref Rotation rotation, [ReadOnly] ref MovementComponent movement)
+        public void Execute(ref Translation translation, [ReadOnly] ref Rotation rotation,
+            [ReadOnly] ref MovementComponent movement, [ReadOnly] ref PhysicsVelocity phyVelocity)
         {
             float movementSpeed = movement.speed * deltaTime;
-            translation.Value.x += movement.playerDirectionAxis.x * movementSpeed;
-            translation.Value.z += movement.playerDirectionAxis.y * movementSpeed;
 
+            phyVelocity.Linear.x = 70 * movement.playerDirectionAxis.x * movementSpeed;
+            phyVelocity.Linear.z = 70 * movement.playerDirectionAxis.y * movementSpeed;
+            
         }
     }
     
