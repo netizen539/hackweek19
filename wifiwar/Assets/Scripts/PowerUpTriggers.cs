@@ -48,6 +48,7 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
         StepPhysicsWorld m_StepPhysicsWorldSystem;
         EntityQuery TriggerGroupQuery;
         BeginSimulationEntityCommandBufferSystem ecbSystem;
+        EntityCommandBuffer commandBuffer;
         
 
         protected override void OnCreate()
@@ -60,6 +61,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
             {
                 All = new ComponentType[] { typeof(PowerUpTriggerComponent), }
             });
+
+            commandBuffer = ecbSystem.CreateCommandBuffer();
         }
 
         // [BurstCompile]
@@ -69,6 +72,10 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
             public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
             [ReadOnly]
             public ComponentDataFromEntity<WallTag> WallGroup;
+            [ReadOnly]
+            public ComponentDataFromEntity<DestroyTag> DestroyGroup;
+            [ReadOnly]
+            public ComponentDataFromEntity<HitByDeadlyComponent> HitByDeadlyGroup;
             public EntityCommandBuffer CommandBuffer;
 
             public void Execute(TriggerEvent triggerEvent)
@@ -98,6 +105,9 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 if (!isTriggerPowerUp)
                     return;
 
+                if (DestroyGroup.Exists(triggerEntity))
+                    return;
+
                 bool isWall = WallGroup.Exists(triggerEntity);
                 var powerUpComponent = PowerUpTriggerGroup[triggerEntity];
 
@@ -108,7 +118,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 else if(powerUpComponent.isDeadly)
                 {
                     CommandBuffer.AddComponent<DestroyTag>(triggerEntity, new DestroyTag());
-                    CommandBuffer.AddComponent<HitByDeadlyComponent>(dynamicEntity, new HitByDeadlyComponent { DeadlyEntity = triggerEntity });
+                    if(!HitByDeadlyGroup.Exists(dynamicEntity))
+                        CommandBuffer.AddComponent<HitByDeadlyComponent>(dynamicEntity, new HitByDeadlyComponent { DeadlyEntity = triggerEntity });
                 }
                 else if (powerUpComponent.enabled)
                 {
@@ -134,6 +145,8 @@ public class PowerUpTriggers : MonoBehaviour, IConvertGameObjectToEntity
                 PowerUpTriggerGroup = GetComponentDataFromEntity<PowerUpTriggerComponent>(false),
                 PhysicsVelocityGroup = GetComponentDataFromEntity<PhysicsVelocity>(),
                 WallGroup = GetComponentDataFromEntity<WallTag>(true),
+                DestroyGroup = GetComponentDataFromEntity<DestroyTag>(true),
+                HitByDeadlyGroup = GetComponentDataFromEntity<HitByDeadlyComponent>(true),
                 CommandBuffer = ecbSystem.CreateCommandBuffer()
             }.Schedule(m_StepPhysicsWorldSystem.Simulation,
                         ref m_BuildPhysicsWorldSystem.PhysicsWorld, inputDeps);
