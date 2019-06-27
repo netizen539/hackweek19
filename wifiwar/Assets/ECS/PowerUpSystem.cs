@@ -16,11 +16,12 @@ public struct PowerUpSystemComponent : IComponentData
 }
 
 [Serializable]
-public struct PowerUpTouchedByPlayer : IComponentData{}
-
-[Serializable]
 public struct GotSword : IComponentData{}
-public struct PlayerHit : IComponentData { }
+public struct GotGun : IComponentData { }
+public struct PlayerHit : IComponentData
+{
+    int wtf;
+}
 
 public class PowerUpSystem : MonoBehaviour, IConvertGameObjectToEntity
 {
@@ -28,10 +29,11 @@ public class PowerUpSystem : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-       
+
         var data = new PowerUpSystemComponent
         {
-            chargeTime = chargeTime
+            chargeTime = chargeTime,
+            currentCharge = 0
         };
 
         dstManager.AddComponentData(entity, data);
@@ -46,25 +48,38 @@ public class PowerUpSystemBehavior : ComponentSystem
     protected override void OnCreate()
     {
         ecb = World.Active.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-        commandBuffer = ecb.CreateCommandBuffer();
     }
 
     protected override void OnUpdate()
     {
+        commandBuffer = ecb.CreateCommandBuffer();
 
-        //Entities.ForEach((Entity ent, ref PlayerHit playerit, ref PowerUpSystemComponent powerup) =>
-        //{
+        Entities.ForEach((Entity ent, ref PlayerHit playerHit, ref PowerUpSystemComponent powerup) =>
+        {
         //    commandBuffer.RemoveComponent<PlayerHit>(ent);
-        //    //powerup.currentCharge = 0;
-        //});
+              powerup.currentCharge = 0;
+        });
 
-  
-        Entities.ForEach((Entity ent, ref PowerUpSystemComponent powerupsys) =>
+
+        Entities.ForEach((Entity ent, ref PowerUpSystemComponent powerupsys, ref PowerUpTriggerComponent powerUpTriggerComponent) =>
         {
             
 
             if (powerupsys.currentCharge == powerupsys.chargeTime)
                 return;
+
+            if (powerupsys.currentCharge == 0)
+            {
+  
+                powerUpTriggerComponent.enabled = false;
+
+                var renderer = World.Active.EntityManager.GetSharedComponentData<RenderMesh>(ent);
+
+                Vector2 offset = new Vector2(0.5f, 0.0f);
+                renderer.material.mainTextureOffset = offset;
+
+                PostUpdateCommands.SetSharedComponent<RenderMesh>(ent, renderer);
+            }
 
             var deltaTime = Time.deltaTime;
             powerupsys.currentCharge += deltaTime;
@@ -72,6 +87,7 @@ public class PowerUpSystemBehavior : ComponentSystem
             if (powerupsys.currentCharge >= powerupsys.chargeTime)
             {
                 powerupsys.currentCharge = powerupsys.chargeTime;
+                powerUpTriggerComponent.enabled = true;
 
                 var renderer = World.Active.EntityManager.GetSharedComponentData<RenderMesh>(ent);
                 
@@ -81,17 +97,6 @@ public class PowerUpSystemBehavior : ComponentSystem
                 PostUpdateCommands.SetSharedComponent<RenderMesh>(ent, renderer);
             }
 
-            if (powerupsys.currentCharge == 0)
-            {
-                powerupsys.currentCharge = powerupsys.chargeTime;
-
-                var renderer = World.Active.EntityManager.GetSharedComponentData<RenderMesh>(ent);
-
-                Vector2 offset = new Vector2(0.5f, 0.0f);
-                renderer.material.mainTextureOffset = offset;
-
-                PostUpdateCommands.SetSharedComponent<RenderMesh>(ent, renderer);
-            }
         });
     }
 }
