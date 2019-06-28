@@ -22,12 +22,12 @@ mergeInto(LibraryManager.library, {
         var msg = "move,"+ x + ","+ y;
 	    console.log("RJ SendJoystickToServer:"+x+","+y+"\r\n");
 	    ws.send(msg);
-    }
+    },
 
     JSSendFireToServer : function() {
 	var msg = "fire";
 	ws.send(msg);
-    }
+    },
 
     JSSendShieldToServer : function() {
 	var msg = "shield";
