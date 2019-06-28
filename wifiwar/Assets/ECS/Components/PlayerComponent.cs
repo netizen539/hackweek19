@@ -6,5 +6,7 @@ using Unity.Mathematics;
 [Serializable]
 public struct PlayerComponent : IComponentData
 {
-    public uint kills;
+	public uint kills;
+	public float MaxCooldown;
+	public float currentCoolDown;
 }
