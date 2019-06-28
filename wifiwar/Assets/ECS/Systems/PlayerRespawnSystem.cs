@@ -10,7 +10,7 @@ public class PlayerRespawnSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(HitByDeadlyComponent), typeof(RespawnRequest));
+        var deadPlayerQuery = EntityManager.CreateEntityQuery(typeof(PlayerRespawnComponent), typeof(HitByDeadlyComponent), typeof(RespawnRequest));
         using (var deadPlayers = deadPlayerQuery.ToEntityArray(Allocator.TempJob))
             foreach (var player in deadPlayers)
             {
