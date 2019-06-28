@@ -23,21 +23,25 @@ public class PlayerDeathSystem : ComponentSystem
 					EntityManager.GetComponentData<HitByDeadlyComponent>(deadPlayer);
 				Entity deadlyEntity = hitByDeadlyComponent.DeadlyEntity;
 				Entity attackingPlayer;
+				uint attackerKills = 0;
 				if (EntityManager.HasComponent<ProjectileComponent>(deadlyEntity))
 				{
 					var projectile = EntityManager.GetComponentData<ProjectileComponent>(deadlyEntity);
 					attackingPlayer = projectile.Player;
 
-					var attackerKills = EntityManager.GetComponentData<PlayerComponent>(attackingPlayer);
-					attackerKills.kills++;
-					EntityManager.SetComponentData(attackingPlayer, attackerKills);
+					var attKills = EntityManager.GetComponentData<PlayerComponent>(attackingPlayer);
+					attKills.kills++;
+					attackerKills = attKills.kills;
+					EntityManager.SetComponentData(attackingPlayer, attKills);
 				}
 				else
 					attackingPlayer = deadlyEntity;
 
 				Debug.Log("Player: " + attackingPlayer + "  killed " + deadPlayer);
 				var deadKills = EntityManager.GetComponentData<PlayerComponent>(deadPlayer);
+				Leaderboard.Current.RemoveRunningLeader((ulong)deadPlayer.Index);
 				Leaderboard.Current.AddScore((ulong)deadPlayer.Index, deadKills.kills);
+				Leaderboard.Current.UpdateRunningLeader((ulong)attackingPlayer.Index, attackerKills);
 			}
 
 			// actually kill players after full leaderboard update, in case player kills someone and dies at the same time

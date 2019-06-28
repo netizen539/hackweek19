@@ -148,12 +148,20 @@ public class Leaderboard : MonoBehaviour
 
         if (scoreChanged != null)
             scoreChanged();
+
+        Debug.Log(string.Format("Current leader: {0} with {1} kills", RunningLeader.Value, _runningScore));
     }
 
-    public void RemoveRunningLeader()
+    public void RemoveRunningLeader(ulong id)
     {
-        _runningLeader = null;
-        if (scoreChanged != null)
-            scoreChanged();
+        if (_runningLeader.HasValue)
+        {
+            if (_runningLeader.Value == id)
+            {
+                _runningLeader = null;
+                if (scoreChanged != null)
+                    scoreChanged();
+            }
+        }
     }
 }

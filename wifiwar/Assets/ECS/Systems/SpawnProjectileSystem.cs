@@ -74,32 +74,36 @@ public class SpawnProjectileSystem : ComponentSystem
 				//EntityManager.SetComponentData(bullet, new CompositeScale { Value = new float4x4(compositeScale.c0 * 5, compositeScale.c1, compositeScale.c2 * 5, compositeScale.c3) });
 			}
 			*/
-
-			if (EntityManager.HasComponent<ScattershotPowerUpTag>(spawner) == true)
+			if (EntityManager.HasComponent<NewPowerUpComponent>(spawner))
 			{
-				// left bullet
-				var leftBullet = EntityManager.Instantiate(bullet);
-				var lefDirection = new Vector2(bulletDirection.x, bulletDirection.z);
-				lefDirection = Quaternion.Euler(0, 0, -30) * lefDirection;
-				var leftmovementData = new MovementComponent
+				var powerUpComponent = EntityManager.GetComponentData<NewPowerUpComponent>(spawner);
+				if (powerUpComponent.powerType == PowerUpTypes.SpreadShot)
 				{
-					playerDirectionAxis = lefDirection,
-					speed = bulletTemplateData.Speed
-				};
 
-				EntityManager.SetComponentData(leftBullet, leftmovementData);
+					// left bullet
+					var leftBullet = EntityManager.Instantiate(bullet);
+					var lefDirection = new Vector2(bulletDirection.x, bulletDirection.z);
+					lefDirection = Quaternion.Euler(0, 0, -30) * lefDirection;
+					var leftmovementData = new MovementComponent
+					{
+						playerDirectionAxis = lefDirection,
+						speed = bulletTemplateData.Speed
+					};
 
-				//right bullet
-				var rightBullet = EntityManager.Instantiate(bullet);
-				var rightDirection = new Vector2(bulletDirection.x, bulletDirection.z);
-				rightDirection = Quaternion.Euler(0, 0, +30) * rightDirection;
-				var rightBulletData = new MovementComponent
-				{
-					playerDirectionAxis = rightDirection,
-					speed = bulletTemplateData.Speed
-				};
+					EntityManager.SetComponentData(leftBullet, leftmovementData);
 
-				EntityManager.SetComponentData(rightBullet, rightBulletData);
+					//right bullet
+					var rightBullet = EntityManager.Instantiate(bullet);
+					var rightDirection = new Vector2(bulletDirection.x, bulletDirection.z);
+					rightDirection = Quaternion.Euler(0, 0, +30) * rightDirection;
+					var rightBulletData = new MovementComponent
+					{
+						playerDirectionAxis = rightDirection,
+						speed = bulletTemplateData.Speed
+					};
+
+					EntityManager.SetComponentData(rightBullet, rightBulletData);
+				}
 
 			}
 		}
